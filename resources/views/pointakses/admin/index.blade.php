@@ -7,7 +7,7 @@
  <li class="nav-item active">
      <a class="nav-link" href="/admin">
          <i class="fas fa-fw fa-tachometer-alt"></i>
-         <span>Dashboard</span></a>
+         <span {{route('admin')}}>Dashboard</span></a>
  </li>
 
  <!-- Divider -->
@@ -23,13 +23,16 @@
      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
          aria-expanded="true" aria-controls="collapseTwo">
          <i class="fas fa-fw fa-cog"></i>
-         <span>Components</span>
+         <span>Manajemen Kos</span>
      </a>
      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
          <div class="bg-white py-2 collapse-inner rounded">
-             <h6 class="collapse-header">Custom Components:</h6>
-             <a class="collapse-item" href="buttons.html">Buttons</a>
-             <a class="collapse-item" href="cards.html">Cards</a>
+             <h6 class="collapse-header">Manajemen Kos:</h6>
+             <a class="collapse-item" href="{{route('kategori')}}">Kategori</a>
+             <a class="collapse-item" href="{{route('jenis_kos')}}">Jenis Kos</a>
+             <a class="collapse-item" href="{{route('fasilitas')}}">Fasilitas Kos</a>
+             <a class="collapse-item" href="{{ route('fasilitas_kamar') }}">Fasilitas Kamar</a>
+             <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
          </div>
      </div>
  </li>
@@ -39,13 +42,13 @@
      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
          aria-expanded="true" aria-controls="collapseUtilities">
          <i class="fas fa-fw fa-wrench"></i>
-         <span>Utilities</span>
+         <span>Manajemen Pengguna</span>
      </a>
      <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
          data-parent="#accordionSidebar">
          <div class="bg-white py-2 collapse-inner rounded">
-             <h6 class="collapse-header">Custom Utilities:</h6>
-             <a class="collapse-item" href="{{route('usercontrol')}}">User Control</a>
+             <h6 class="collapse-header">Manajemen Pengguna:</h6>
+             <a class="collapse-item" href="{{route('usercontrol')}}">Kontrol Pengguna</a>
              <a class="collapse-item" href="utilities-border.html">Borders</a>
              <a class="collapse-item" href="utilities-animation.html">Animations</a>
              <a class="collapse-item" href="utilities-other.html">Other</a>

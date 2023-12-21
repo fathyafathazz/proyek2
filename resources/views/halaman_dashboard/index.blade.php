@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>KosConnect - Dashboard</title>
+    <title {{ route('admin') }}>KosConnect - Dashboard</title>
 
     {{-- icon --}}
     <link rel="icon" type="image/png" href="{{ asset('halaman_depan/assets/img/logokos.png') }}">

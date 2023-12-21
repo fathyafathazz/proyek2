@@ -7,7 +7,7 @@
     <li class="nav-item active">
         <a class="nav-link" href="index.html">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span {{ route('admin') }}>Dashboard</span></a>
+            <span {{route('admin')}}>Dashboard</span></a>
     </li>
 
     <!-- Divider -->
@@ -28,11 +28,12 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Manajemen Kos:</h6>
-                < <a class="collapse-item" href="{{route('kategori')}}">Kategori</a>
+                <a class="collapse-item" href="{{ route('kategori') }}">Kategori</a>
                 <a class="collapse-item" href="{{route('jenis_kos')}}">Jenis Kos</a>
                 <a class="collapse-item" href="{{ route('fasilitas') }}">Fasilitas Kos</a>
                 <a class="collapse-item" href="{{ route('fasilitas_kamar') }}">Fasilitas Kamar</a>
                 <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
+                
             </div>
         </div>
     </li>
@@ -112,7 +113,7 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title mb-4">Edit user</h4>
+                <h4 class="card-title mb-4">Edit data Koos</h4>
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -122,28 +123,44 @@
                         </ul>
                     </div>
                 @endif
-                @foreach ($uc as $item)
-                    <form class="forms-sample" method="POST" action="/edituc" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $item->id }}">
-                        <div class="mb-3">
-                            <label for="gambar" class="form-label">Gambar</label>
-                            <div class="p-2">
-                                <img src="{{ asset('picture/accounts/') }}/{{ $item->gambar }}" alt="Image"
-                                    style="width: 50px; height: 50px;">
-                            </div>
-                            <input class="form-control" type="file" id="gambar" name="gambar">
-                        </div>
-                        <div class="form-group">
-                            <label for="nama">Nama lengkap</label>
-                            <input type="text" class="form-control" id="nama" placeholder="Kevin Example"
-                                name="fullname" value="{{ $item->fullname }}">
-                        </div>
-                        <input type="hidden" name="password" value="{{ $item->password }}">
-                        <button type="submit" class="btn btn-primary me-2">Edit</button>
-                        <a href="/usercontrol" class="btn btn-light">Kembali</a>
-                    </form>
-                @endforeach
+                <form class="forms-sample" method="POST" action="/editkos">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $data->id }}">
+                    <div class="form-group">
+                        <label for="nama_kos">Nama Kos</label>
+                        <input type="text" class="form-control" id="nama_kos" name="nama_kos"
+                            value="{{ $data->nama_kos }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="alamat_kos">Alamat Kos</label>
+                        <input type="text" class="form-control" id="alamat_kos"
+                            placeholder="Jl. Sari Asih No.54, Sarijadi, Kec. Sukasari, Kota Bandung, Jawa Barat"
+                            name="alamat_kos"value="{{ $data->alamat_kos }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="deskripsi_kos">Deskripsi Kos</label>
+                        <input type="text" class="form-control" id="deskripsi_kos"
+                            placeholder="Lokasi strategis, fasilitas lengkap" name="deskripsi_kos" value="{{ $data->deskripsi_kos }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_kategoris">Kategori</label>
+                        <select class="select2 form-control" id="id_kategoris" name="id_kategoris" value="{{ $data->nama_kategori}}" required>
+                            @foreach ($kategoris as $kategoris)
+                                <option value="{{ $kategoris->id }}">{{ $kategoris->nama_kategori }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_jenis_kos">Jenis Kos:</label>
+                        <select class="select2 form-control" id="id_jenis_kos" name="id_jenis_kos" value="{{ $data->nama_jenis_kos }}" required>
+                            @foreach ($jeniskos as $jeniskos)
+                                <option value="{{ $jeniskos->id }}">{{ $jeniskos->nama_jenis_kos }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary me-2">Edit</button>
+                    <a href="/kos" class="btn btn-light">Kembali</a>
+                </form>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@
          <li class="nav-item active">
              <a class="nav-link" href="/admin">
                  <i class="fas fa-fw fa-tachometer-alt"></i>
-                 <span>Dashboard</span></a>
+                 <span {{ route('admin') }}>Dashboard</span></a>
          </li>
 
          <!-- Divider -->
@@ -24,13 +24,14 @@
              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                  aria-expanded="true" aria-controls="collapseTwo">
                  <i class="fas fa-fw fa-cog"></i>
-                 <span>Components</span>
+                 <span>Manajemen Kos</span>
              </a>
              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                  <div class="bg-white py-2 collapse-inner rounded">
-                     <h6 class="collapse-header">Custom Components:</h6>
-                     <a class="collapse-item" href="buttons.html">Buttons</a>
-                     <a class="collapse-item" href="cards.html">Cards</a>
+                     <h6 class="collapse-header">Manajemen Kos:</h6>
+                     <a class="collapse-item" href="{{ route('kategori') }}">Kategori</a>
+                     <a class="collapse-item" href="{{ route('jenis_kos') }}">Jenis Kos</a>
+                     <a class="collapse-item" href="{{ route('fasilitas') }}">Fasilitas Kos</a>
                  </div>
              </div>
          </li>
@@ -40,13 +41,13 @@
              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                  aria-expanded="true" aria-controls="collapseUtilities">
                  <i class="fas fa-fw fa-wrench"></i>
-                 <span>Utilities</span>
+                 <span>Manajemen Pengguna</span>
              </a>
              <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                  data-parent="#accordionSidebar">
                  <div class="bg-white py-2 collapse-inner rounded">
-                     <h6 class="collapse-header">Custom Utilities:</h6>
-                     <a class="collapse-item" href="{{ route('usercontrol') }}">User Control</a>
+                     <h6 class="collapse-header">Manajemen Pengguna:</h6>
+                     <a class="collapse-item" href="{{ route('usercontrol') }}">Kontrol Pengguna</a>
                      <a class="collapse-item" href="utilities-border.html">Borders</a>
                      <a class="collapse-item" href="utilities-animation.html">Animations</a>
                      <a class="collapse-item" href="utilities-other.html">Other</a>
@@ -230,28 +231,28 @@
                  <h6 class="m-0 font-weight-bold text-primary mb-4">DataTables Example</h6>
                  {{-- new --}}
 
-                <a href="/damatambah" class="btn-sm btn-primary text-decoration-none">Tambah data</a>
+                 <a href="/damatambah" class="btn-sm btn-primary text-decoration-none">Tambah data</a>
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $item)
-                                <li>{{ $item }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                @if (Session::has('success'))
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            Swal.fire(
-                                'Sukses',
-                                '{{ Session::get('success') }}',
-                                'success'
-                            );
-                        });
-                    </script>
-                @endif
+                 @if ($errors->any())
+                     <div class="alert alert-danger">
+                         <ul>
+                             @foreach ($errors->all() as $item)
+                                 <li>{{ $item }}</li>
+                             @endforeach
+                         </ul>
+                     </div>
+                 @endif
+                 @if (Session::has('success'))
+                     <script>
+                         document.addEventListener('DOMContentLoaded', function() {
+                             Swal.fire(
+                                 'Sukses',
+                                 '{{ Session::get('success') }}',
+                                 'success'
+                             );
+                         });
+                     </script>
+                 @endif
              </div>
              <div class="card-body">
                  <div class="table-responsive">
@@ -286,9 +287,10 @@
                                      <td>{{ $item->jurusan }}</td>
                                      <td><a href="/damaedit/{{ $item->id }}"
                                              class="btn-sm btn-warning text-decoration-none">Edit</a> |
-                                         <form onsubmit="return confirmHapus(event)" action="/damahapus/{{ $item->id }}" method="post" class="d-inline">
+                                         <form onsubmit="return confirmHapus(event)"
+                                             action="/damahapus/{{ $item->id }}" method="post" class="d-inline">
                                              @csrf
-                                             <button type="submit"  class="btn-sm btn-danger">Hapus</button>
+                                             <button type="submit" class="btn-sm btn-danger">Hapus</button>
                                          </form>
                                      </td>
                                  </tr>
@@ -304,25 +306,25 @@
  @endsection
  {{-- ini buat swall --}}
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script>
-    function confirmHapus(event) {
-        event.preventDefault(); // Menghentikan form dari pengiriman langsung
+ <script>
+     function confirmHapus(event) {
+         event.preventDefault(); // Menghentikan form dari pengiriman langsung
 
-        Swal.fire({
-            title: 'Yakin Hapus Data?',
-            text: "Data yang dihapus tidak dapat dikembalikan!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Hapus',
-            cancelButtonText: 'Batal'
-        }).then((willDelete) => {
-            if (willDelete.isConfirmed) {
-                event.target.submit(); // Melanjutkan pengiriman form
-            } else {
-                swal('Your imaginary file is safe!');
-            }
-        });
-    }
-</script>
+         Swal.fire({
+             title: 'Yakin Hapus Data?',
+             text: "Data yang dihapus tidak dapat dikembalikan!",
+             icon: 'warning',
+             showCancelButton: true,
+             confirmButtonColor: '#d33',
+             cancelButtonColor: '#3085d6',
+             confirmButtonText: 'Hapus',
+             cancelButtonText: 'Batal'
+         }).then((willDelete) => {
+             if (willDelete.isConfirmed) {
+                 event.target.submit(); // Melanjutkan pengiriman form
+             } else {
+                 swal('Your imaginary file is safe!');
+             }
+         });
+     }
+ </script>

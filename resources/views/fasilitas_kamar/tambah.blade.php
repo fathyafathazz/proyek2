@@ -28,8 +28,8 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Manajemen Kos:</h6>
-                < <a class="collapse-item" href="{{route('kategori')}}">Kategori</a>
-                <a class="collapse-item" href="{{route('jenis_kos')}}">Jenis Kos</a>
+                <a class="collapse-item" href="{{ route('kategori') }}">Kategori</a>
+                <a class="collapse-item" href="{{ route('jenis_kos') }}">Jenis Kos</a>
                 <a class="collapse-item" href="{{ route('fasilitas') }}">Fasilitas Kos</a>
                 <a class="collapse-item" href="{{ route('fasilitas_kamar') }}">Fasilitas Kamar</a>
                 <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
@@ -112,7 +112,7 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title mb-4">Edit user</h4>
+                <h4 class="card-title mb-4">Tambah data Fasilitas Kamar</h4>
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -122,28 +122,22 @@
                         </ul>
                     </div>
                 @endif
-                @foreach ($uc as $item)
-                    <form class="forms-sample" method="POST" action="/edituc" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $item->id }}">
-                        <div class="mb-3">
-                            <label for="gambar" class="form-label">Gambar</label>
-                            <div class="p-2">
-                                <img src="{{ asset('picture/accounts/') }}/{{ $item->gambar }}" alt="Image"
-                                    style="width: 50px; height: 50px;">
-                            </div>
-                            <input class="form-control" type="file" id="gambar" name="gambar">
+                <form class="forms-sample" method="POST" action="/tambahfasilitaskamar" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label for="id">ID</label>
+                        <input type="text" class="form-control" id="id" name="id"
+                            value="<uuid-value>" disabled>
                         </div>
-                        <div class="form-group">
-                            <label for="nama">Nama lengkap</label>
-                            <input type="text" class="form-control" id="nama" placeholder="Kevin Example"
-                                name="fullname" value="{{ $item->fullname }}">
-                        </div>
-                        <input type="hidden" name="password" value="{{ $item->password }}">
-                        <button type="submit" class="btn btn-primary me-2">Edit</button>
-                        <a href="/usercontrol" class="btn btn-light">Kembali</a>
-                    </form>
-                @endforeach
+
+                    <div class="form-group">
+                        <label for="nama_fasilitas_kamar">Nama Fasilitas Kamar</label>
+                        <input type="text" class="form-control" id="nama_fasilitas_kamar"
+                            placeholder="AC/TV" name="nama_fasilitas_kamar" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary me-2">Tambah</button>
+                    <a href="/fasilitas_kamar" class="btn btn-light">Kembali</a>
+                </form>
             </div>
         </div>
     </div>
