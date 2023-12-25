@@ -7,7 +7,7 @@
     <li class="nav-item active">
         <a class="nav-link" href="index.html">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span {{route('admin')}}>Dashboard</span></a>
+            <span {{route('pemilikkos')}}>Dashboard</span></a>
     </li>
 
     <!-- Divider -->
@@ -28,12 +28,8 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Manajemen Kos:</h6>
-                <a class="collapse-item" href="{{ route('kategori') }}">Kategori</a>
-                <a class="collapse-item" href="{{route('jenis_kos')}}">Jenis Kos</a>
-                <a class="collapse-item" href="{{ route('fasilitas') }}">Fasilitas Kos</a>
-                <a class="collapse-item" href="{{ route('fasilitas_kamar') }}">Fasilitas Kamar</a>
                 <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
-                
+                <a class="collapse-item" href="{{ route('kamar_kos') }}">Kamar Kos</a>
             </div>
         </div>
     </li>
@@ -113,7 +109,7 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title mb-4">Edit data Koos</h4>
+                <h4 class="card-title mb-4">Edit data Kos</h4>
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -123,44 +119,46 @@
                         </ul>
                     </div>
                 @endif
-                <form class="forms-sample" method="POST" action="/editkos">
-                    @csrf
-                    <input type="hidden" name="id" value="{{ $data->id }}">
-                    <div class="form-group">
-                        <label for="nama_kos">Nama Kos</label>
-                        <input type="text" class="form-control" id="nama_kos" name="nama_kos"
-                            value="{{ $data->nama_kos }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="alamat_kos">Alamat Kos</label>
-                        <input type="text" class="form-control" id="alamat_kos"
-                            placeholder="Jl. Sari Asih No.54, Sarijadi, Kec. Sukasari, Kota Bandung, Jawa Barat"
-                            name="alamat_kos"value="{{ $data->alamat_kos }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="deskripsi_kos">Deskripsi Kos</label>
-                        <input type="text" class="form-control" id="deskripsi_kos"
-                            placeholder="Lokasi strategis, fasilitas lengkap" name="deskripsi_kos" value="{{ $data->deskripsi_kos }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="id_kategoris">Kategori</label>
-                        <select class="select2 form-control" id="id_kategoris" name="id_kategoris" value="{{ $data->nama_kategori}}" required>
-                            @foreach ($kategoris as $kategoris)
-                                <option value="{{ $kategoris->id }}">{{ $kategoris->nama_kategori }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="id_jenis_kos">Jenis Kos:</label>
-                        <select class="select2 form-control" id="id_jenis_kos" name="id_jenis_kos" value="{{ $data->nama_jenis_kos }}" required>
-                            @foreach ($jeniskos as $jeniskos)
-                                <option value="{{ $jeniskos->id }}">{{ $jeniskos->nama_jenis_kos }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary me-2">Edit</button>
-                    <a href="/kos" class="btn btn-light">Kembali</a>
-                </form>
+                    <form class="forms-sample" method="POST" action="/editkos">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $data->id }}">
+                        <div class="form-group">
+                            <label for="nama_kos">Nama Kos</label>
+                            <input type="text" class="form-control" id="nama_kos" name="nama_kos"
+                                value="{{ $data->nama_kos }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat_kos">Alamat Kos</label>
+                            <input type="text" class="form-control" id="alamat_kos" name="alamat_kos"
+                                value="{{ $data->alamat_kos }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="keterangan_kos">Keterangan Kos</label>
+                            <input type="text" class="form-control" id="keterangan_kos" name="keterangan_kos"
+                                value="{{ $data->keterangan_kos }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fasilitas">Fasilitas</label>
+                            <input type="text" class="form-control" id="fasilitas" name="fasilitas"
+                                value="{{ $data->fasilitas }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="kategori">Kategori Kos</label>
+                            <select class="select2 form-control" id="kategori" name="kategori" required>
+                                <option value="{{ $data->kategori }}" disabled selected>{{ $data->kategori }}</option>
+                                <option value="Campur">Kos Campur</option>
+                                <option value="Putra">Kos Putra</option>
+                                <option value="Putri">Kos Putri</option>
+                            </select>
+                        </div>   
+                        {{-- <div class="form-group">
+                            <label for="kategori">Kategori</label>
+                            <input type="text" class="form-control" id="kategori" name="kategori"
+                                 required>
+                        </div> --}}
+                        <button type="submit" class="btn btn-primary me-2">Edit</button>
+                        <a href="/kos" class="btn btn-light">Kembali</a>
+                    </form>
             </div>
         </div>
     </div>

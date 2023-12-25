@@ -30,10 +30,6 @@
              <h6 class="collapse-header">Manajemen Kos:</h6>
              <a class="collapse-item" href="{{route('kategori')}}">Kategori</a>
              <a class="collapse-item" href="{{route('jenis_kos')}}">Jenis Kos</a>
-             <a class="collapse-item" href="{{route('fasilitas')}}">Fasilitas Kos</a>
-             <a class="collapse-item" href="{{ route('fasilitas_kamar') }}">Fasilitas Kamar</a>
-             <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
-         </div>
      </div>
  </li>
 
@@ -128,10 +124,10 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    {{ Auth::user()->email }} </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    {{ Auth::user()->role }}</div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" >{{ Auth::user()->email }}
+                                     </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" {{ Auth::user()->role }}>
+                                    Admin</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>

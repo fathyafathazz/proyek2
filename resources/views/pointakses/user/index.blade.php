@@ -8,7 +8,7 @@
     {{-- diisni benerin buat role --}}
      <a class="nav-link" href="/user"> 
          <i class="fas fa-fw fa-tachometer-alt"></i>
-         <span>Dashboard</span></a>
+         <span {{route('user')}} >Dashboard</span></a>
  </li>
 
  <!-- Divider -->
@@ -126,10 +126,10 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    {{ Auth::user()->email }} </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    {{ Auth::user()->role }}</div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"> {{ Auth::user()->email }}
+                                     </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" {{ Auth::user()->role }}>
+                                    Pencari Kos</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>

@@ -30,8 +30,7 @@
                  <h6 class="collapse-header">Manajemen Kos:</h6>
                  <a class="collapse-item" href="{{ route('kategori') }}">Kategori</a>
                  <a class="collapse-item" href="{{ route('jenis_kos') }}">Jenis Kos</a>
-                 <a class="collapse-item" href="{{ route('fasilitas') }}">Fasilitas Kos</a>
-                 <a class="collapse-item" href="{{ route('fasilitas_kamar') }}">Fasilitas Kamar</a><a class="collapse-item" href="{{ route('kos') }}">Kos</a>
+                 <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
              </div>
          </div>
      </li>
@@ -111,10 +110,10 @@
      <div class="container-fluid">
 
          <!-- Page Heading -->
-         {{-- <h1 class="h3 mb-2 text-gray-800">Data Mahasiswa/Kos</h1>
+         <h1 class="h3 mb-2 text-gray-800">Data Kategori Kos</h1>
          <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
              For more information about DataTables, please visit the <a target="_blank"
-                 href="https://datatables.net">official DataTables documentation</a>.</p> --}}
+                 href="https://datatables.net">official DataTables documentation</a>.</p>
 
          <!-- DataTales Example -->
          <div class="card shadow mb-4">

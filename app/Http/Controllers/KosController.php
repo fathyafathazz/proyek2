@@ -6,34 +6,42 @@ use App\Models\Kos;
 use App\Models\Kategori;
 use App\Models\JenisKos;
 use App\Models\Fasilitas;
+use App\Models\FasilitasKos;
+use Exception;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class KosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     function index()
     {
-        $data = Kos::orderBy('nama_kos')->get();
-        $data = Kos::with('Kategori', 'JenisKos')->orderBy('nama_kos')->get();
+        $data = Kos::all();
+        // $data = Kos::with('Kategori', 'JenisKos')->orderBy('nama_kos')->get();
         return view('kos.index', ['data' => $data]);
     }
 
-    function tambah()
+    public function tambah()
     {
-        $kategoris = Kategori::orderBy('nama_kategori')->get();
-        $jenis_kos = JenisKos::orderBy('nama_jenis_kos')->get();
-        // $fasilitas = Fasilitas::orderBy('nama_fasilitas')->get();
-        return view('kos.tambah', ['kategoris' => $kategoris, 'jeniskos' => $jenis_kos, ]); //'fasilitas' => $fasilitas
+        
+        // $kategoris = Kategori::orderBy('nama_kategori')->get();
+        // $jenis_kos = JenisKos::orderBy('nama_jenis_kos')->get();
+        return view('kos.tambah'); //['kategoris' => $kategoris, 'jeniskos' => $jenis_kos]
     }
+
 
     function edit($id)
     {
         $data = Kos::find($id);
-        $kategoris = Kategori::orderBy('nama_kategori')->get();
-        $jenis_kos = JenisKos::orderBy('nama_jenis_kos')->get();
-        return view('kos.edit', ['data' => $data, 'kategoris' => $kategoris, 'jeniskos' => $jenis_kos]);
+        // $kategoris = Kategori::orderBy('nama_kategori')->get();
+        // $jenis_kos = JenisKos::orderBy('nama_jenis_kos')->get();
+        return view('kos.edit', ['data' => $data]); //, 'kategoris' => $kategoris, 'jeniskos' => $jenis_kos
     }
 
     function hapus(Request $request)
@@ -46,75 +54,74 @@ class KosController extends Controller
     }
 
     // new
+    // ...
+
     function create(Request $request)
     {
         $request->validate([
             'nama_kos' => 'required|string',
             'alamat_kos' => 'required|string',
-            'deskripsi_kos' => 'required|string',
-            'id_kategoris' => 'required|exists:kategoris,id',
-            'id_jenis_kos' => 'required|exists:jenis_kos,id',
-            // 'fasilitas' => 'required|array',
-            // 'fasilitas.*' => 'exists:fasilitas,id',
+            'keterangan_kos' => 'required|string',
+            'fasilitas' => 'required|string',
+            // 'id_kategoris' => 'required|exists:kategoris,id',
+            // 'id_jenis_kos' => 'required|exists:jenis_kos,id',
         ]);
 
-        // DB::beginTransaction();
-
-        // try {
+        $kos = new Kos();
+        $kos->id = Uuid::uuid4()->toString();
+        $kos->id_pemilikkos = Auth::user()->id; // Menggunakan id pemilik dari user yang sedang login
+        $kos->nama_kos = $request->nama_kos;
+        $kos->alamat_kos = $request->alamat_kos;
+        $kos->keterangan_kos = $request->keterangan_kos;
+        $kos->fasilitas = $request->fasilitas;
+        $kos->kategori = $request->kategori;
+        $kos->save();
+        
             // $kos = Kos::create([
+            //     'id' => Uuid::uuid4()->toString(), // Generate UUID
             //     'nama_kos' => $request->nama_kos,
             //     'alamat_kos' => $request->alamat_kos,
-            //     'deskripsi_kos' => $request->deskripsi_kos,
-            //     'id_kategoris' => $request->id_kategoris,
-            //     'id_jenis_kos' => $request->id_jenis_kos,
+            //     'keterangan_kos' => $request->keterangan_kos,
+            //     'fasilitas' => $request->fasilitas,
+            //     'kategori' => $request->kategori,
+            //     // 'id_kategoris' => $request->id_kategoris,
+            //     // 'id_jenis_kos' => $request->id_jenis_kos,
             // ]);
-
-            $kos = new Kos();
-            $kos->id = Uuid::uuid4()->toString();
-            $kos->nama_kos = $request->nama_kos;
-            $kos->alamat_kos = $request->alamat_kos;
-            $kos->deskripsi_kos = $request->deskripsi_kos;
-            $kos->id_kategoris = $request->id_kategoris;
-            $kos->id_jenis_kos = $request->id_jenis_kos;
-            $kos->save();
-
-            // $kos->fasilitas()->sync($request->fasilitas);
-
-            // DB::commit();
+            // $kos->save();
 
             Session::flash('success', 'Data berhasil ditambahkan');
-            return redirect('/kos');
-        // } 
-        // catch (\Exception $e) {
-        //     DB::rollBack();
-        //     Session::flash('error', $e->getMessage());
-        //     return redirect()->back();
-        // }
+
+        return redirect('/kos');
+        
     }
+
 
     function change(Request $request)
     {
         $request->validate([
             'nama_kos' => 'required|string',
             'alamat_kos' => 'required|string',
-            'deskripsi_kos' => 'required|string',
-            'id_kategoris' => 'required|exists:kategoris,id',
-            'id_jenis_kos' => 'required|exists:jenis_kos,id',
-            // 'fasilitas' => 'required|array',
-            // 'fasilitas.*' => 'exists:fasilitas,id',
+            'keterangan_kos' => 'required|string',
+            'fasilitas' => 'required|string',
+            'kategori' => 'required|string',
+            // 'id_kategoris' => 'required|exists:kategoris,id',
+            // 'id_jenis_kos' => 'required|exists:jenis_kos,id',
+            
         ]);
 
         $kos = Kos::find($request->id);
 
         $kos->nama_kos = $request->nama_kos;
         $kos->alamat_kos = $request->alamat_kos;
-        $kos->deskripsi_kos = $request->deskripsi_kos;
-        $kos->id_kategoris = $request->id_kategoris;
-        $kos->id_jenis_kos = $request->id_jenis_kos;
+        $kos->keterangan_kos = $request->keterangan_kos;
+        $kos->fasilitas = $request->fasilitas;
+        $kos->kategori = $request->kategori;
+        // $kos->id_kategoris = $request->id_kategoris;
+        // $kos->id_jenis_kos = $request->id_jenis_kos;
 
         $kos->save();
 
-        Session::flash('success', 'Berhasil Mengubah Kategori');
+        Session::flash('success', 'Berhasil Mengubah Data Kos');
 
         return redirect('/kos');
     }

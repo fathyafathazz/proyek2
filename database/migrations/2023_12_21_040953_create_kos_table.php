@@ -16,17 +16,19 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('nama_kos');
             $table->string('alamat_kos');
-            $table->text('deskripsi_kos');
-            $table->uuid('id_kategoris');
-            $table->uuid('id_jenis_kos');
-            // $table->uuid('id_fasilitas');
-            // $table->integer('jumlah_kamar_tersedia');
-            // $table->integer('jumlah_kamar_terisi');
+            $table->text('keterangan_kos');
+            $table->text('fasilitas');
+            $table->string('kategori');
+            $table->unsignedBigInteger('id_pemilikkos');
+            // $table->uuid('id_kategoris');
+            // $table->uuid('id_jenis_kos');
+            
+          
             $table->timestamps();
 
-            $table->foreign('id_kategoris')->references('id')->on('kategoris');
+            // $table->foreign('id_kategoris')->references('id')->on('kategoris');
             // $table->foreign('id_jenis_kos')->references('id')->on('jenis_kos');
-            $table->foreign('id_fasilitas')->references('id')->on('fasilitas');
+            $table->foreign('id_pemilikkos')->references('id')->on('users');
         });
     }
 

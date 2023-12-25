@@ -30,8 +30,6 @@
                 <h6 class="collapse-header">Manajemen Kos:</h6>
                 <a class="collapse-item" href="{{ route('kategori') }}">Kategori</a>
                 <a class="collapse-item" href="{{route('jenis_kos')}}">Jenis Kos</a>
-                <a class="collapse-item" href="{{ route('fasilitas') }}">Fasilitas Kos</a>
-                <a class="collapse-item" href="{{ route('fasilitas_kamar') }}">Fasilitas Kamar</a>
                 <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
             </div>
         </div>

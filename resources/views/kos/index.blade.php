@@ -5,9 +5,9 @@
 
      <!-- Nav Item - Dashboard -->
      <li class="nav-item active">
-         <a class="nav-link" href="/admin">
+         <a class="nav-link" href="/pemilikkos">
              <i class="fas fa-fw fa-tachometer-alt"></i>
-             <span {{ route('admin') }}>Dashboard</span></a>
+             <span {{ route('pemilikkos') }}>Dashboard</span></a>
      </li>
 
      <!-- Divider -->
@@ -28,11 +28,8 @@
          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
              <div class="bg-white py-2 collapse-inner rounded">
                  <h6 class="collapse-header">Manajemen Kos:</h6>
-                 <a class="collapse-item" href="{{ route('kategori') }}">Kategori</a>
-                 <a class="collapse-item" href="{{ route('jenis_kos') }}">Jenis Kos</a>
-                 <a class="collapse-item" href="{{ route('fasilitas') }}">Fasilitas Kos</a>
-                 <a class="collapse-item" href="{{ route('fasilitas_kamar') }}">Fasilitas Kamar</a>
                  <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
+                 <a class="collapse-item" href="{{ route('kamar_kos') }}">Kamar Kos</a>
              </div>
          </div>
      </li>
@@ -42,12 +39,11 @@
          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
              aria-expanded="true" aria-controls="collapseUtilities">
              <i class="fas fa-fw fa-wrench"></i>
-             <span>Manajemen Pengguna</span>
+             <span>Kelola Pesanan</span>
          </a>
          <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
              <div class="bg-white py-2 collapse-inner rounded">
-                 <h6 class="collapse-header">Manajemen Pengguna:</h6>
-                 <a class="collapse-item" href="{{ route('usercontrol') }}">Kontrol Pengguna</a>
+                 <h6 class="collapse-header">Kelola Pesanan:</h6>
                  <a class="collapse-item" href="utilities-border.html">Borders</a>
                  <a class="collapse-item" href="utilities-animation.html">Animations</a>
                  <a class="collapse-item" href="utilities-other.html">Other</a>
@@ -112,8 +108,8 @@
      <div class="container-fluid">
 
          <!-- Page Heading -->
-         {{-- <h1 class="h3 mb-2 text-gray-800">Data Mahasiswa/Kos</h1>
-         <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+         <h1 class="h3 mb-2 text-gray-800">Data Kos</h1>
+         {{-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
              For more information about DataTables, please visit the <a target="_blank"
                  href="https://datatables.net">official DataTables documentation</a>.</p> --}}
 
@@ -154,10 +150,10 @@
                                  <th>ID</th>
                                  <th>Nama Kos</th>
                                  <th>Alamat Kos</th>
-                                 <th>Deskripsi Kos</th>
-                                 <th>Kategori</th>
-                                 <th>Jenis Kos</th>
-                                 {{-- <th>Fasilitas Kos</th> --}}
+                                 <th>Keterangan Kos</th>
+                                 <th>Fasilitas Kos</th>
+                                 <th>Kategori Kos</th>
+                                 {{-- <th>Jenis Kos</th> --}}
                                  <th>Action</th>
                              </tr>
                          </thead>
@@ -166,10 +162,10 @@
                                 <th>ID</th>
                                 <th>Nama Kos</th>
                                 <th>Alamat Kos</th>
-                                <th>Deskripsi Kos</th>
-                                <th>Kategori</th>
-                                <th>Jenis Kos</th>
-                                {{-- <th>Fasilitas Kos</th> --}}
+                                <th>Keterangan Kos</th>
+                                <th>Fasilitas Kos</th>
+                                <th>Kategori Kos</th>
+                                {{-- <th>Jenis Kos</th> --}}
                                 <th>Action</th>
                              </tr>
                          </tfoot>
@@ -178,10 +174,12 @@
                                  <tr>
                                      <td>{{ $item->id }}</td>
                                      <td>{{ $item->nama_kos }}</td>
-                                     <td>{{ $item->deskripsi_kos }}</td>
                                      <td>{{ $item->alamat_kos }}</td>
-                                     <td>{{ $item->Kategori->nama_kategori }}</td>
-                                     <td>{{ $item->JenisKos->nama_jenis_kos }}</td>
+                                     <td>{{ $item->keterangan_kos }}</td>
+                                     <td>{{ $item->fasilitas }}</td>
+                                     <td>{{ $item->kategori }}</td>
+                                     {{-- <td>{{ $item->Kategori->nama_kategori }}</td>
+                                     <td>{{ $item->JenisKos->nama_jenis_kos }}</td> --}}
                                      {{-- <td>{{ $item->fasilitas }}</td> --}}
                                      <td><a href="/kosedit/{{ $item->id }}"
                                              class="btn-sm btn-warning text-decoration-none">Edit</a> |

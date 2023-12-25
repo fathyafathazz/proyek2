@@ -7,7 +7,7 @@
     <li class="nav-item active">
         <a class="nav-link" href="index.html">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span {{ route('admin') }}>Dashboard</span></a>
+            <span {{ route('pemilikkos') }}>Dashboard</span></a>
     </li>
 
     <!-- Divider -->
@@ -28,11 +28,8 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Manajemen Kos:</h6>
-                <a class="collapse-item" href="{{ route('kategori') }}">Kategori</a>
-                <a class="collapse-item" href="{{ route('jenis_kos') }}">Jenis Kos</a>
-                <a class="collapse-item" href="{{ route('fasilitas') }}">Fasilitas Kos</a>
-                <a class="collapse-item" href="{{ route('fasilitas_kamar') }}">Fasilitas Kamar</a>
                 <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
+                <a class="collapse-item" href="{{ route('kamar_kos') }}">Kamar Kos</a>
             </div>
         </div>
     </li>
@@ -42,12 +39,11 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
             aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-wrench"></i>
-            <span>Manajemen Pengguna</span>
+            <span>Kelola Pesanan</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Manajemen Pengguna:</h6>
-                <a class="collapse-item" href="{{ route('usercontrol') }}">Kontrol Pengguna</a>
+                <h6 class="collapse-header">Kelola Pesanan:</h6>
                 <a class="collapse-item" href="utilities-color.html">Colors</a>
                 <a class="collapse-item" href="utilities-border.html">Borders</a>
                 <a class="collapse-item" href="utilities-animation.html">Animations</a>
@@ -129,6 +125,11 @@
                         <input type="text" class="form-control" id="id" name="id" value="<uuid-value>"
                             disabled>
                     </div>
+                    <div class="form-group">
+                        <label for="id_pemilikkos">Nama Pemilik Kos</label>
+                        <textarea type="text" class="form-control" id="fasilitas" placeholder="Dapur Bersama, Kamar Mandi luar dsb"
+                            name="fasilitas" value="{{ Auth::user()->id }}" required disabled>{{ Auth::user()->fullname }}</textarea>
+                    </div>
 
                     <div class="form-group">
                         <label for="nama_kos">Nama Kos</label>
@@ -142,30 +143,64 @@
                             name="alamat_kos" required>
                     </div>
                     <div class="form-group">
-                        <label for="deskripsi_kos">Deskripsi Kos</label>
-                        <input type="text" class="form-control" id="deskripsi_kos"
-                            placeholder="Lokasi strategis, fasilitas lengkap" name="deskripsi_kos" required>
+                        <label for="keterangan_kos">Keterangan Kos</label>
+                        <input class="form-control" id="keterangan_kos" placeholder="Lokasi strategis, Aturan Jam Malam"
+                            name="keterangan_kos" required >
                     </div>
                     <div class="form-group">
+                        <label for="fasilitas">Fasilitas Kos</label>
+                        <input type="text" class="form-control" id="fasilitas" placeholder="Dapur Bersama, Kamar Mandi luar dsb"
+                            name="fasilitas" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="kategori">Kategori Kos</label>
+                        <select class="select2 form-control" id="kategori" name="kategori" required>
+                            <option value="" disabled selected>-- Pilih Kategori --</option>
+                            <option value="Campur">Kos Campur</option>
+                            <option value="Putra">Kos Putra</option>
+                            <option value="Putri">Kos Putri</option>
+                        </select>
+                    </div>                    
+                    {{-- <div class="form-group">
                         <label for="id_kategoris">Kategori</label>
-                        @if($kategoris != $old_kategoris)
                         <select class="select2 form-control" id="id_kategoris" name="id_kategoris" required>
                             <option value="" disabled selected>-- Pilih Kategori --</option>
                             @foreach ($kategoris as $kategoris)
                                 <option value="{{ $kategoris->id }}">{{ $kategoris->nama_kategori }}</option>
                             @endforeach
-                        </select>@endif
-                    </div>
-                    <div class="form-group">
-                        @if($jeniskos != $old_jeniskos)
+                        </select>
+                    </div> --}}
+                    {{-- <div class="form-group">
                         <label for="id_jenis_kos">Jenis Kos:</label>
                         <select class="select2 form-control" id="id_jenis_kos" name="id_jenis_kos" required>
                             <option value="" disabled selected>-- Pilih Jenis Kos --</option>
                             @foreach ($jeniskos as $jeniskos)
                                 <option value="{{ $jeniskos->id }}">{{ $jeniskos->nama_jenis_kos }}</option>
                             @endforeach
-                        </select>@endif
-                    </div>
+                        </select>
+                    </div> --}}
+                    
+                    {{-- {{-- <form action="code.php"> --}}
+                    {{-- <label for="fasilitas">Fasilitas Kos</label>
+                        <input type="checkbox" class="btn-check" id="id_fasilitas" autocomplete="off"
+                            name="fasilitas[]" onclick="submitFasilitas()" multiple required>
+
+                        @foreach ($fasilitas as $fasilitasItem)
+                            <label class="btn btn-outline-primary" for="btn-check-{{ $fasilitasItem->id }}">
+                                <input type="checkbox" class="btn-check" id="btn-check-{{ $fasilitasItem->id }}"
+                                    name="fasilitas[]" value="{{ $fasilitasItem->id }}" onclick="submitFasilitas()">
+                                {{ $fasilitasItem->nama_fasilitas }}
+                            </label>
+                        @endforeach --}}
+                    {{-- </form> --}}
+
+
+                    {{-- <input type="checkbox" class="btn-check" id="id_fasilitas" checked autocomplete="off"
+                        name="fasilitas[]" multiple required>
+                    
+                        <label class="btn btn-outline-primary btn-sm" for="btn-check-2"
+                            >{{ $fasilitas->nama_fasilitas }}</label>
+                     --}}
                     {{-- <div class="input-group mb-3">
                         <label for="fasilitas">Fasilitas Kos</label>
                         <select class="select2 form-control" id="id_fasilitas" name="fasilitas[]" multiple required aria-describedby="button-addon2">
@@ -178,9 +213,11 @@
                     </div>
                     <div id="fasilitas-terpilih">
                     </div> --}}
-
-                    <button type="submit" class="btn btn-primary me-2">Tambah</button>
-                    <a href="/kos" class="btn btn-light">Kembali</a>
+                    {{-- <input type="hidden" name="id_pemilikkos" value="{{ Auth::user()->id }}"> --}}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                        <a href="/kos" class="btn btn-light">Kembali</a>
+                    </div>
                 </form>
 
             </div>
@@ -188,31 +225,4 @@
     </div>
 @endsection
 @section('script')
-{{-- <script>
-    $(document).ready(function() {
-        // Initialize Select2 for fasilitas dropdown
-        $('#id_fasilitas').select2();
-
-        // Function to submit only fasilitas
-        function submitFasilitas() {
-            const fasilitasForm = $('#id_fasilitas').closest('form');
-            const fasilitasData = new FormData(fasilitasForm[0]);
-            fasilitasData.delete('_token'); // Remove CSRF token
-
-            $.ajax({
-                url: '/simpan-fasilitas', // Adjust the URL if needed
-                type: 'POST',
-                data: fasilitasData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    $('#fasilitas-terpilih').html(response); // Display selected fasilitas
-                },
-                error: function(error) {
-                    // Handle errors here
-                }
-            });
-        }
-    });
-</script> --}}
 @endsection
