@@ -18,6 +18,7 @@
     </head>
     <body id="page-top">
         <!-- Navigation-->
+        
         <nav class="navbar navbar-expand-lg bg-secondary text-transform fixed-top" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="#page-top"><img src="halaman_depan/assets/img/logokos.png" alt="KosConnect" width="50" height="50">KosConnect</a>

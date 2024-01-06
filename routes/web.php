@@ -13,6 +13,8 @@ use App\Http\Controllers\KosController;
 use App\Http\Controllers\UproleController;
 use App\Http\Controllers\UserControlController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PemesananController;
+use App\Http\Controllers\LaporanController;
 use App\Helpers\FormatHelper;
 use Illuminate\Support\Facades\Route;
 
@@ -42,7 +44,23 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin')->middleware('userAkses:admin');
     Route::get('/pemilikkos', [PemilikkosController::class, 'index'])->name('pemilikkos')->middleware('userAkses:pemilikkos');
-    Route::get('/user', [UserController::class, 'index'])->name('user')->middleware('userAkses:user');
+    Route::get('/home', [UserController::class, 'index'])->name('user.index')->middleware('userAkses:user');
+
+
+    //user
+    Route::get('/user/detail/{id}', [UserController::class, 'detail'])->name('user.detail')->middleware('userAkses:user');
+
+    Route::get('/user', [UserController::class, 'index']); // Route untuk menampilkan daftar kamar kos
+    Route::post('/transaksi/pemesanan/{id}', [PemesananController::class, 'index'])->name('pemesanan.index'); // Route untuk menampilkan form pemesanan
+    Route::post('/mocheckoutnih', [PemesananController::class, 'create'])->name('checkout');
+    Route::get('/invoice/{id}', [PemesananController::class, 'showInvoice'])->name('invoice'); // Route untuk menampilkan invoice
+
+    // Route::get('/transaksi/pemesanan/{id}', [PemesananController::class, 'index'])->name('pemesanan.index');
+    // Route::post('/tambahdama', [PemesananController::class, 'create'])->name('pemesanan.create');
+    // Route::post('/transaksi/invoice/{id}', [PemesananController::class, 'showInvoice'])->name('invoice');
+    // Route::get('pemesanan/create/{id_kamar_kos}/{id_pemilikkos}', [PemesananController::class, 'create'])->name('pemesanan.create');
+
+
 
     //uprole
     Route::post('/uprole/{id}', [UproleController::class, 'index']);
@@ -61,7 +79,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/damaedit/{id}', [DataMahasiswa::class, 'edit']);
     Route::post('/editdama', [DataMahasiswa::class, 'change']);
     Route::post('/damahapus/{id}', [DataMahasiswa::class, 'hapus']);
-    
+
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

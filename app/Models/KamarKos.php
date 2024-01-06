@@ -9,7 +9,6 @@ class KamarKos extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id',
         'id_kos',
         'nomor_kamar',
         'ukuran_kamar',
@@ -26,4 +25,7 @@ class KamarKos extends Model
         return $this->belongsTo('App\Models\Kos', 'id_kos');
     }
     protected $table = 'kamar_kos';
+     protected $primaryKey = 'id'; // Tentukan primary key
+     public $incrementing = false; // Atur agar tidak auto increment
+
 }

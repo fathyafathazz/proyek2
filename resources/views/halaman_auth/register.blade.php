@@ -41,7 +41,7 @@
                     enctype="multipart/form-data">
                     @csrf
                     <span class="login100-form-title p-b-43">
-                        Sign Up to continue
+                        Daftar untuk Melanjutkan
                     </span>
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -115,7 +115,7 @@
                 </form>
 
                 <div class="login100-more"
-                    style="background-image: url('{{ asset('halaman_auth/images/bg-01.jpg') }}');">
+                    style="background-image: url('{{ asset('halaman_auth/images/registrasi.png') }}');">
                 </div>
             </div>
         </div>

@@ -13,13 +13,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kos', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('id')->primary()->default(DB::raw('UUID()'));
             $table->string('nama_kos');
             $table->string('alamat_kos');
             $table->text('keterangan_kos');
             $table->text('fasilitas');
             $table->string('kategori');
-            $table->unsignedBigInteger('id_pemilikkos');
+            $table->uuid('id_pemilikkos');
             // $table->uuid('id_kategoris');
             // $table->uuid('id_jenis_kos');
             
