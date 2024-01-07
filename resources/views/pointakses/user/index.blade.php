@@ -57,7 +57,7 @@
                         <p class="m-0" style="font-size: 16px; font-weight:600; color:#314051 "><span>Rp
                                 
                             </span><a href="{{ route('user.detail', ['id' => $p->id]) }}">{{ number_format($p->harga_sewa) }} </a></p>
-                            <form action="{{route('pemesanan.index', ['id' => $p->id])}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{route('pemesanan.index', ['id' => $p->id])}}" method="GET" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id_kamar_kos" value="{{ $p->id }}">
                                 <button type="submit" class="btn btn-outline-primary" style="font-size: 14px;">Booking</button>

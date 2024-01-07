@@ -7,6 +7,7 @@ use App\Models\Pemesanan;
 use App\Models\KamarKos;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class PemesananController extends Controller
@@ -18,24 +19,37 @@ class PemesananController extends Controller
         return view('transaksi.pemesanan', ['data' => $data]);
     }
 
+    public function history()
+    {
+        // Ambil data pemesanan berdasarkan id_user dari pengguna yang sedang login
+        $historyPemesanan = Pemesanan::with('kamarKos.kos')
+            ->where('id_user', Auth::user()->id)
+            ->orderBy('tanggal_pemesanan', 'desc')
+            ->get();
+        // Tampilkan data sebelum menggunakan dd()
+        // foreach ($historyPemesanan as $pemesanan) {
+        //     dd($pemesanan->toArray());
+        return view('pointakses.user.history', ['historyPemesanan' => $historyPemesanan]);
+        }
+        
+    
+
     public function create(Request $request)
-    { 
+    {
         $request->validate([
             'nama_pemesan' => 'required',
             'alamat_pemesan' => 'required',
             'nomor_telepon' => 'required',
             'jumlah_kamar' => 'required|numeric',
             'jenis_kelamin' => 'required',
-            'id_kamar_kos' => 'required|numeric|exists:kamar_kos,id',
+            'id_kamar_kos' => 'required|string|uuid|exists:kamar_kos,id',
         ]);
-        
 
         $data = KamarKos::findOrFail($request->id_kamar_kos);
 
-        $kodePemesanan = Str::random(7);
+        $huruf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        $kodePemesanan = strtoupper(substr(str_shuffle($huruf), 0, 7));
 
-        $method = $request->method();
-        dd($method);
         $pemesananData = [
             'kode_pemesanan' => $kodePemesanan,
             'nama_pemesan' => $request->nama_pemesan,
@@ -51,14 +65,15 @@ class PemesananController extends Controller
         ];
 
         $pemesanan = Pemesanan::create($pemesananData);
-
-        return redirect()->route('invoice', ['id' => $pemesanan->id]);
+        // return redirect()->route('transaksi.showInvoice', ['id' => $pemesanan->id]);
+        return redirect()->route('history');
     }
 
     public function showInvoice($id)
     {
-        $pemesanan = Pemesanan::with('kamar_kos.kos')->findOrFail($id);
+        $pemesanan = Pemesanan::with('kamarKos.kos')->findOrFail($id);
 
         return view('transaksi.invoice', ['pemesanan' => $pemesanan]);
     }
+    
 }

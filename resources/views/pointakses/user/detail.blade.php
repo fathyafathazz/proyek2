@@ -85,7 +85,7 @@
                             </strong></p>
                         <div class="mb-5">
                             {{-- {{ route('user.keranjang.simpan') }} --}}
-                            <form action="{{route('pemesanan.index', ['id' => $data->id])}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{route('pemesanan.index', ['id' => $data->id])}}" method="GET" enctype="multipart/form-data">
                                 @csrf
                                 @if (Route::has('login'))
                                     @auth

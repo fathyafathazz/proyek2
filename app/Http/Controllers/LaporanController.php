@@ -9,45 +9,56 @@ use Illuminate\Support\Facades\Auth;
 
 class LaporanController extends Controller
 {
-    // public function index()
-    // {
-    //     $pemesanan = Pemesanan::with('kamar_kos', 'user')->orderBy('created_at', 'desc')->get();
-    //     return view('transaksi.invoice', compact('pemesanan'));
-    // }
+    public function index()
+    {
+        $pemesanan = Pemesanan::with('kamarKos.kos', 'user')->orderBy('created_at', 'desc')->get();
+        return view('pointakses.admin.laporan', compact('pemesanan'));
+    }
 
-    // public function pemilikKos()
-    // {
-    //     return view('pointakses.pemilikkos.laporan');
-    // }
+    public function pemilikKos()
+    {
+        // Mendapatkan ID pemilik kos saat ini
+        $pemilikKosId = Auth::id();
 
-    // public function kode(Request $request)
-    // {
-    //     return redirect()->route('transaksi.invoice', $request->kode_pemesanan);
-    // }
+        // Mendapatkan data pemesanan yang hanya terkait dengan kos milik pemilik kos saat ini
+        $pemesanan = Pemesanan::with('kamarKos.kos', 'user')
+            ->whereHas('kamarKos.kos.pemilikkos', function ($query) use ($pemilikKosId) {
+                $query->where('id', $pemilikKosId);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-    // public function show($id)
-    // {
-    //     $data = Pemesanan::with('kamar_kos.kos.pemilikkos', 'user')->where('kode_pemesanan', $id)->first();
-    //     if ($data) {
-    //         return view('transaksi.invoice', compact('data'));
-    //     } else {
-    //         return redirect()->back()->with('error', 'Kode Pemesanan Tidak Ditemukan!');
-    //     }
-    // }
+        return view('pointakses.admin.laporan', compact('pemesanan'));
+    }
 
-    // public function pembayaran($id)
-    // {
-    //     Pemesanan::find($id)->update([
-    //         'status' => 'Sudah Bayar',
-    //         'id_admin' => Auth::user()->id
-    //     ]);
+    public function kode(Request $request)
+    {
+        return redirect()->route('pointakses.admin.show', $request->kode_pemesanan);
+    }
 
-    //     return redirect()->back()->with('success', 'Pembayaran Kosan Success!');
-    // }
+    public function show($id)
+    {
+        $pemesanan = Pemesanan::with('kamarKos.kos.pemilikkos', 'user')->where('kode_pemesanan', $id)->first();
+        if ($pemesanan) {
+            return view('pointakses.admin.show', compact('pemesanan'));
+        } else {
+            return redirect()->back()->with('error', 'Kode Pemesanan Tidak Ditemukan!');
+        }
+    }
 
-    // public function history()
-    // {
-    //     $pemesanan = Pemesanan::with('kamar_kos.')->where('id_user', Auth::user()->id)->orderBy('created_at', 'desc')->get();
-    //     return view('pointakses.user.history', compact('pemesanan'));
-    // }
- }
+    public function pembayaran($id)
+    {
+        $pemesanan = Pemesanan::with('admin')->find($id);
+
+        if (!$pemesanan) {
+            return redirect()->back()->with('error', 'Pemesanan tidak ditemukan!');
+        }
+
+        $pemesanan->update([
+            'status' => 'Sudah Bayar',
+            'verified_by' => Auth::user()->fullname,
+        ]);
+
+        return redirect()->back()->with('success', 'Pembayaran Kosan Success!');
+    }
+}

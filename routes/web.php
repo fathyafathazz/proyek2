@@ -7,6 +7,7 @@ use App\Http\Controllers\DataMahasiswa;
 use App\Http\Controllers\KamarKosController;
 use App\Http\Controllers\FasilitasKamarController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\JenisKosController;
 use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\KosController;
@@ -49,18 +50,20 @@ Route::middleware(['auth'])->group(function () {
 
     //user
     Route::get('/user/detail/{id}', [UserController::class, 'detail'])->name('user.detail')->middleware('userAkses:user');
-
+    Route::get('/search', [SearchController::class, 'searchByCategory'])->name('search');
     Route::get('/user', [UserController::class, 'index']); // Route untuk menampilkan daftar kamar kos
-    Route::post('/transaksi/pemesanan/{id}', [PemesananController::class, 'index'])->name('pemesanan.index'); // Route untuk menampilkan form pemesanan
-    Route::post('/mocheckoutnih', [PemesananController::class, 'create'])->name('checkout');
-    Route::get('/invoice/{id}', [PemesananController::class, 'showInvoice'])->name('invoice'); // Route untuk menampilkan invoice
+    Route::get('/transaksi/pemesanan/{id}', [PemesananController::class, 'index'])->name('pemesanan.index');
+    Route::post('/pemesanan', [PemesananController::class, 'create'])->name('checkout');
+    Route::get('/history', [PemesananController::class, 'history'])->name('history');
+    Route::get('/transaksi/showInvoice/{id}', [PemesananController::class, 'showInvoice'])->name('transaksi.showInvoice');
 
-    // Route::get('/transaksi/pemesanan/{id}', [PemesananController::class, 'index'])->name('pemesanan.index');
-    // Route::post('/tambahdama', [PemesananController::class, 'create'])->name('pemesanan.create');
-    // Route::post('/transaksi/invoice/{id}', [PemesananController::class, 'showInvoice'])->name('invoice');
-    // Route::get('pemesanan/create/{id_kamar_kos}/{id_pemilikkos}', [PemesananController::class, 'create'])->name('pemesanan.create');
+    //admin
+    Route::get('/transaksi', [LaporanController::class, 'index'])->name('transaksi');
+    Route::get('/transaksi/{kode}', [LaporanController::class, 'show'])->name('transaksi.show');
+    Route::get('/pembayaran/{id}', [LaporanController::class, 'pembayaran'])->name('pembayaran');
 
-
+    //pemilikkos
+    Route::get('/pesanan', [LaporanController::class, 'pemilikKos'])->name('pesanan');
 
     //uprole
     Route::post('/uprole/{id}', [UproleController::class, 'index']);

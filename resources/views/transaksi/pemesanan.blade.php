@@ -55,12 +55,12 @@
                     </div>
                 @endif
 
-                <form class="forms-sample" method="POST" action="{{ route('checkout') }}"
-                    enctype="multipart/form-data">
+                <form class="forms-sample" method="POST" action="{{ route('checkout') }}" enctype="multipart/form-data">
                     @csrf
+                    
+                        <input type="hidden" name="id_kamar_kos" value="{{ $data->id }}">
 
 
-                    <input type="hidden" name="id_kamar_kos" value="{{ $data->id_kamar_kos }}">
                     <div class="container">
                         <div class="row">
                             <div class="col">
@@ -131,7 +131,7 @@
                     </div>
 
                     <div class="d-grid gap-2 mt-3">
-                        <button type="submit" class="btn btn-primary" style="background-color: #1CBB9C; color:#fff" >Pesan
+                        <button type="submit" class="btn btn-primary" style="background-color: #1CBB9C; color:#fff">Pesan
                             Sekarang</button>
                         <a href="{{ url()->previous() }}" class="btn btn-light">Kembali</a>
                     </div>

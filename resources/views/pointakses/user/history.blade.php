@@ -1,61 +1,47 @@
-@extends('layouts.app')
-@section('title', 'History')
-@section('styles')
-  <style>
-    a:hover {
-      text-decoration: none;
-    }
+@extends('layout.index')
 
-    .card-body {
-      padding: .5rem 1rem;
-      border-bottom: 1px solid #e3e6f0;
-    }
-  </style>
-@endsection
+@section('title', 'History Pemesanan')
+
 @section('content')
-  <div class="row justify-content-center">
-    <div class="col-12" style="margin-top: -15px">
-      <a href="{{ url('/') }}" class="text-white btn"><i class="fas fa-arrow-left mr-2"></i> Kembali</a>
-      <div class="row mt-2">
-        @if ($pemesanan->count() > 0)
-          @foreach ($pemesanan as $data)
-            <a href="{{ route('transaksi.show', $data->kode) }}">
-              <div class="col-lg-6 mb-4">
-                  <div class="card o-hidden border-0 shadow h-100">
-                    <div class="card-body">
-                      <div class="row no-gutters align-items-center">
-                        <div class="col font-weight-bold h5" style="margin: 0; color: #000;">
-                          {{ $data->rute->start }}<i class="fas fa-long-arrow-alt-right mx-2" style="color: #858796;"></i>{{ $data->rute->end }}
-                        </div>
-                        <div class="col-auto text-right">
-                          <i class="fas fa-angle-right" style="color: #858796;"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <p style="margin: 0; color:#000;">{{ date('l, d F Y H:i', strtotime($data->waktu)) }} WIB</p>
-                      <p style="margin: 0; color:#000;">{{ $data->rute->transportasi->name }} ({{ $data->rute->transportasi->kode }})</p>
-                    </div>
-                  </div>
-                </a>
+<style>
+  .container{
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+        "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        
+  }
+</style>
+  <div class="container mt-5">
+    <h2 class="mb-4" style="font-weight: 600;">History Pemesanan</h2>
+
+    @if ($historyPemesanan->count() > 0)
+      <div class="row">
+        @foreach ($historyPemesanan as $history)
+          <div class="col-lg-6 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title font-weight-bold mb-3" style="font-weight: 550;">{{ $history->kode_pemesanan }}</h5>
+                <p class="card-text">Nama Kos: {{ $history->kamarKos->kos->nama_kos ?? 'Nama Kos Tidak Tersedia' }}</p>
+                <p class="card-text">Alamat Kos: {{ $history->kamarKos->kos->alamat_kos ?? 'Alamat Kos Tidak Tersedia' }}</p>
+                <p class="card-text">Nomor Kamar: {{ $history->kamarKos->nomor_kamar ?? 'Nomor Kamar Tidak Tersedia' }}</p>
+                <p class="card-text">Harga Sewa: {{ number_format($history->kamarKos->harga_sewa ?? '0.0')  }}</p>
+                <p class="card-text">Jumlah Kamar: {{ $history->jumlah_kamar ?? '0' }}</p>
+                <p class="card-text">Total Pemesanan: {{ number_format($history->total_pemesanan) ?? 'Nomor Kamar Tidak Tersedia' }}</p>
+                <p class="card-text">Status: {{ $history->status }}</p>
+                <p class="card-text">Tanggal Pemesanan: {{ date('l, d F Y H:i', strtotime($history->tanggal_pemesanan)) ?? 'Nomor Kamar Tidak Tersedia' }} WIB</p>
+                <a href="{{ route('transaksi.showInvoice', $history->id) }}" class="btn" style="background-color: #1abc9c; color: white;">Detail</a>
               </div>
-            </a>
-          @endforeach
-        @else
-          <div class="col-12 mb-4">
-              <div class="card o-hidden border-0 shadow h-100 py-2">
-                <div class="card-body text-center">
-                  <h3 class="text-gray-900 font-weight-bold">Tidak ada pemesanan</h3>
-                  <p class="text-muted">Silahkan lakukan pemesanan ticket terlebih dahulu.</p>
-                  <a href="{{ url('/') }}" class="btn btn-primary" style="font-size: 16px; border-radius: 10rem;">
-                    Cari Ticket
-                  </a>
-                </div>
-              </div>
-            </a>
+            </div>
           </div>
-        @endif
+        @endforeach
       </div>
-    </div>
+    @else
+      <div class="card">
+        <div class="card-body text-center">
+          <h3 class="text-gray-900 font-weight-bold">Tidak ada riwayat pemesanan</h3>
+          <p class="text-muted">Anda belum melakukan pemesanan.</p>
+          <a href="{{ url('/home') }}" class="btn" style="background-color: #1abc9c; color: white;">Cari Kos</a>
+        </div>
+      </div>
+    @endif
   </div>
 @endsection

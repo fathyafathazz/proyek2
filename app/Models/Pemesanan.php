@@ -25,6 +25,7 @@ class Pemesanan extends Model
         'id_user',
         'id_kamar_kos',
         'status',
+        'total_pemesanan',
     ];
     // Cast kolom waktu menjadi tipe data datetime
     protected $casts = [
@@ -48,7 +49,15 @@ class Pemesanan extends Model
     {
         return $this->belongsTo(User::class, 'id_pemilikkos');
     }
-    
+    // Relasi dengan model Kos melalui KamarKos
+    public function kos()
+    {
+        return $this->belongsTo(Kos::class, 'id_kamar_kos')->with('pemilikkos');
+    }
+    public function admin()
+{
+    return $this->belongsTo(User::class, 'id_admin');
+}
 
 }
 

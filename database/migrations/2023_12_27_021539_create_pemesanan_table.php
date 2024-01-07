@@ -21,6 +21,7 @@ class CreatePemesananTable extends Migration
         Schema::create('pemesanan', function (Blueprint $table) {
             $table->uuid('id')->primary()->default(DB::raw('UUID()'));
             $table->uuid('id_user');
+            $table->uuid('id_admin')->nullable();
             $table->uuid('id_kamar_kos');
             $table->string('kode_pemesanan')->unique();
             $table->string('nama_pemesan');
@@ -34,7 +35,8 @@ class CreatePemesananTable extends Migration
             $table->timestamps();
 
 
-
+            
+            $table->foreign('id_admin')->references('id')->on('users');
             $table->foreign('id_user')->references('id')->on('users');
             $table->foreign('id_kamar_kos')->references('id')->on('kamar_kos');
             

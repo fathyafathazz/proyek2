@@ -34,7 +34,7 @@
 			<div class="wrap-login100">
 				<form action="{{ route('auth')}}" class="login100-form validate-form"method="POST">
                     @csrf
-                    <a href="/" class="btn btn-sm btn-primary">Kembali</a>
+                    <a href="/" class="btn btn-sm " style="background-color: #1abc9c; color: white;">Kembali</a>
 					<span class="login100-form-title p-b-43">
 						Masuk untuk Melanjutkan
 					</span>

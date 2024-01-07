@@ -24,6 +24,11 @@ class KamarKos extends Model
     {
         return $this->belongsTo('App\Models\Kos', 'id_kos');
     }
+    // Relasi dengan model Pemesanan
+    public function pemesanan()
+    {
+        return $this->hasMany('App\Models\Pemesanan', 'id_kamar_kos');
+    }
     protected $table = 'kamar_kos';
      protected $primaryKey = 'id'; // Tentukan primary key
      public $incrementing = false; // Atur agar tidak auto increment

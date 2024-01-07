@@ -3,7 +3,7 @@
   @section('title', 'Verifikasi Pembayaran')
   @section('heading', 'Verifikasi Pembayaran')
 @elseif (Auth::user()->role == "pemilikkos")
-  @section('title', 'Petugas')
+  @section('title', 'Pemilikkos')
 @endif
 @section('content')
   <div class="row justify-content-center">

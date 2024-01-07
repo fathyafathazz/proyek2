@@ -25,6 +25,9 @@ class Kos extends Model
     // {
     //     return $this->belongsTo('App\Models\JenisKos', 'id_jenis_kos');
     // }
-    
+    public function kamarKos()
+    {
+        return $this->hasMany(KamarKos::class, 'id_kos');
+    }   
     protected $table = 'kos';
 }

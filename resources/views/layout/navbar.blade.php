@@ -69,6 +69,7 @@
             }
 
             #mainNav .navbar-toggler {
+
                 font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
                     "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
                 font-weight: 500;
@@ -77,6 +78,10 @@
                 padding: 1%;
                 padding-bottom: 2%;
                 padding-top: 2%;
+            }
+
+            .btn:hover {
+                background-color: #1abc9c;
             }
         </style>
 
@@ -87,39 +92,48 @@
                         width="50" height="50">KosConnect</a>
                 <button class="navbar-toggler text-uppercase font-weight-bold btn-primary text-white rounded"
                     type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #1abc9c">
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
+                    style="background-color: #1abc9c">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                href="/home"><i class="fa-solid fa-house me-1"></i>Home</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                href="/kategori"><i class="fa-solid fa-list me-1"></i>Kategori</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                href="/transaksi"><i class="fa-solid fa-receipt me-1"></i>Booking</a></li>
+                    <ul class="navbar-nav ms-auto justify-content-between">
+                        <form class="d-flex mx-0 mx-lg-1 py-2 px-0 px-lg-2 rounded" action="{{ route('search') }}"
+                            method="GET" style="height: 50px;">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                                name="query">
+                            <select class="form-select me-2" name="kategori" style="width: auto; min-width: 150px;">
+                                <option value="">Semua Kategori</option>
+                                <option value="Putra">Kos Putra</option>
+                                <option value="Putri">Kos Putri</option>
+                                <option value="Campur">Kos Campur</option>
+                            </select>
+                            <button class="btn"
+                                style="border: 2px solid #1abc9c; color: white; vertical-align: center;"
+                                type="submit">Cari</button>
+                        </form>
 
-                        <li class="nav-item mx-0 mx-lg-1">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded" data-toggle="modal" data-target="#logoutModal"
-                                href="#"> <i class="fa-solid fa-right-from-bracket me-1"></i>
-                                {{-- <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> --}}
-                                Logout
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                                href="/home"><i class="fa-solid fa-house me-1"></i>Home</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                                href="/history"><i class="fa-solid fa-receipt me-1"></i>Booking</a></li>
+                        <li class="nav-item mx-0 mx-lg-0">
+                            <a class="nav-link py-2 px-0 px-lg-2 rounded" data-toggle="modal" data-target="#logoutModal"
+                                href="#">
+                                <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
                             </a>
                         </li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                                 href="/pengaturan">
                                 <img class="img-profile rounded-circle"
                                     src="{{ asset('picture/accounts/' . Auth::user()->gambar) }}">
-                                <span class="d-none d-lg-inline ml-2">
-                                    {{ Auth::user()->fullname }}
-                                </span>
-
-
-                            </a>
-                        </li>
+                                <span class="d-none d-lg-inline ml-2">{{ Auth::user()->fullname }}</span>
+                            </a></li>
                     </ul>
                 </div>
+
+
             </div>
         </nav>
 
