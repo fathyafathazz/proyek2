@@ -12,7 +12,7 @@ class PemilikkosController extends Controller
     function index(){
         $jumlahKamarKos = KamarKos::count();
         $jumlahKos = Kos::count();
-        $totalPemesanan = Pemesanan::sum('total_pemesanan');
-        return view('pointakses/pemilikkos/index',[ 'jumlahKamarKos' => $jumlahKamarKos, 'jumlahKos' => $jumlahKos, 'totalPemesanan' => $totalPemesanan]);
+        $totalPemesananSudahBayar = Pemesanan::where('status', 'Sudah Bayar')->sum('total_pemesanan');
+        return view('pointakses/pemilikkos/index',[ 'jumlahKamarKos' => $jumlahKamarKos, 'jumlahKos' => $jumlahKos, 'totalPemesananSudahBayar' => $totalPemesananSudahBayar]);
     }
 }

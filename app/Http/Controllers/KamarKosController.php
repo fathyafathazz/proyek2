@@ -21,13 +21,26 @@ class KamarKosController extends Controller
         $this->middleware('auth');
     }
 
+    // public function index()
+    // {
+       
+    //     $data = KamarKos::all();
+    //     return view('kamar_kos.index', ['data' => $data]);
+    // }
+
     public function index()
     {
-       
-        $data = KamarKos::all();
+        // Mendapatkan user yang sedang login
+        $user = Auth::user();
+
+        // Menampilkan data kamar kos berdasarkan id_pemilikkos (id pemilik kos)
+        $data = KamarKos::whereHas('kos', function ($query) use ($user) {
+            $query->where('id_pemilikkos', $user->id);
+        })->get();
+
         return view('kamar_kos.index', ['data' => $data]);
     }
-
+    
     public function tambah()
     {
         $kos = Kos::all();

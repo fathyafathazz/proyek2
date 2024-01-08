@@ -5,7 +5,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="/admin">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span {{ route('admin') }} >Dashboard</span></a>
     </li>
@@ -28,7 +28,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Manajemen Transaksi:</h6>
-                <a class="collapse-item" href="{{route('pemesanan.laporan')}}">Transaksi</a>
+                <a class="collapse-item" href="{{ route('transaksi') }}">Transaksi</a>
             </div>
         </div>
     </li>

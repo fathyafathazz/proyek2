@@ -27,7 +27,7 @@
         data-client-key=""></script>
         {{-- {{ config('midtrans.client_id') }} --}}
     <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
-    <title>KosConnect | </title>
+    <title>KosConnect | @yield('title') </title>
     {{-- icon --}}
     <link rel="icon" type="image/png" href="{{ asset('halaman_depan/assets/img/logokos.png') }}">
     {{-- {{ $title }} --}}

@@ -181,7 +181,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    {{-- {{ $data->rute->tujuan }} --}}
                     <div class="font-weight-bold h4 text-center" style="margin-bottom: 0">
                         {{ $pemesanan->kamarKos->kos->nama_kos }} </div>
                     <div class="font-weight-bold h4 text-center" style="margin-bottom: 0">
@@ -237,9 +236,18 @@
                             <tr>
                                 <td>Di Verifikasi oleh</td>
                                 <td class="text-right">
-                                    {{ $pemesanan->verified_by ?? '-' }} </td>
+                                    {{ $pemesanan->verified_by ?? '-' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Verifikasi</td>
+                                <td class="text-right">
+                                    {{ $pemesanan->tanggal_verifikasi->format('l, d F Y H:i:s') ?? '-' }}
+                                    {{-- {{ optional($pemesanan->tanggal_verifikasi)->format('d-m-Y H:i:s') ?? '-' }} --}}
+                                </td>
                             </tr>
                         @endif
+
                     </table>
                 </div>
                 @if ($pemesanan->status == 'Belum Bayar' && Auth::user()->role == 'admin')
@@ -253,8 +261,8 @@
             </div>
         </div>
     </div>
-     <!-- Footer -->
-     <footer class="sticky-footer bg-white" id="footer">
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white" id="footer">
         <div class="container my-auto">
             <div class="text-center">
                 <span>Copyright &copy; KosConnect 2023</span>

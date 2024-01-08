@@ -1,4 +1,5 @@
 @extends('layout.index')
+@section('title',"Detail Kamar")
 @section('content')
     <style>
         .btn-outline-primary {

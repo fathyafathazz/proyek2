@@ -18,7 +18,6 @@ class UserController extends Controller
     {
         $id = Str::isUuid($id) ? $id : Str::uuid();
 
-        // dd($id);
         //mengambil detail produk
         $data = KamarKos::with('kos')->findOrFail($id);
         return view('pointakses.user.detail', [ 'data' => $data]);

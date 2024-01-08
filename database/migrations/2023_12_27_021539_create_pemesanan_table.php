@@ -32,6 +32,8 @@ class CreatePemesananTable extends Migration
             $table->integer('jumlah_kamar');
             $table->integer('total_pemesanan');
             $table->enum('status', ['Belum Bayar', 'Sudah Bayar'])->default('Belum Bayar');
+            $table->string('verified_by')->nullable();
+            $table->timestamp('tanggal_verifikasi')->useCurrent();
             $table->timestamps();
 
 

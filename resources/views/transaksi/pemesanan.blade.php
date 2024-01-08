@@ -1,4 +1,5 @@
 @extends('layout.index')
+@section('title',"Booking")
 @section('content')
     <style>
         .btn-primary {
@@ -67,7 +68,7 @@
                                 <div class="form-group">
                                     <label for="nama_pemesan">Nama Pemesan</label>
                                     <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan"
-                                        required>
+                                       value="{{Auth::user()->fullname}}" required>
                                 </div>
 
                                 <div class="form-group">

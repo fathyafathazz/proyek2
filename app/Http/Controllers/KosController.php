@@ -23,25 +23,19 @@ class KosController extends Controller
     function index()
     {
         $data = Kos::all();
-        // $data = Kos::with('Kategori', 'JenisKos')->orderBy('nama_kos')->get();
+
         return view('kos.index', ['data' => $data]);
     }
-
     public function tambah()
     {
-        
-        // $kategoris = Kategori::orderBy('nama_kategori')->get();
-        // $jenis_kos = JenisKos::orderBy('nama_jenis_kos')->get();
-        return view('kos.tambah'); //['kategoris' => $kategoris, 'jeniskos' => $jenis_kos]
+        return view('kos.tambah');
     }
 
 
     function edit($id)
     {
         $data = Kos::find($id);
-        // $kategoris = Kategori::orderBy('nama_kategori')->get();
-        // $jenis_kos = JenisKos::orderBy('nama_jenis_kos')->get();
-        return view('kos.edit', ['data' => $data]); //, 'kategoris' => $kategoris, 'jeniskos' => $jenis_kos
+        return view('kos.edit', ['data' => $data]);
     }
 
     function hapus(Request $request)
@@ -63,8 +57,6 @@ class KosController extends Controller
             'alamat_kos' => 'required|string',
             'keterangan_kos' => 'required|string',
             'fasilitas' => 'required|string',
-            // 'id_kategoris' => 'required|exists:kategoris,id',
-            // 'id_jenis_kos' => 'required|exists:jenis_kos,id',
         ]);
 
         $kos = new Kos();
@@ -76,23 +68,12 @@ class KosController extends Controller
         $kos->fasilitas = $request->fasilitas;
         $kos->kategori = $request->kategori;
         $kos->save();
-        
-            // $kos = Kos::create([
-            //     'id' => Uuid::uuid4()->toString(), // Generate UUID
-            //     'nama_kos' => $request->nama_kos,
-            //     'alamat_kos' => $request->alamat_kos,
-            //     'keterangan_kos' => $request->keterangan_kos,
-            //     'fasilitas' => $request->fasilitas,
-            //     'kategori' => $request->kategori,
-            //     // 'id_kategoris' => $request->id_kategoris,
-            //     // 'id_jenis_kos' => $request->id_jenis_kos,
-            // ]);
-            // $kos->save();
 
-            Session::flash('success', 'Data berhasil ditambahkan');
+
+
+        Session::flash('success', 'Data berhasil ditambahkan');
 
         return redirect('/kos');
-        
     }
 
 
@@ -104,9 +85,7 @@ class KosController extends Controller
             'keterangan_kos' => 'required|string',
             'fasilitas' => 'required|string',
             'kategori' => 'required|string',
-            // 'id_kategoris' => 'required|exists:kategoris,id',
-            // 'id_jenis_kos' => 'required|exists:jenis_kos,id',
-            
+
         ]);
 
         $kos = Kos::find($request->id);
@@ -116,8 +95,6 @@ class KosController extends Controller
         $kos->keterangan_kos = $request->keterangan_kos;
         $kos->fasilitas = $request->fasilitas;
         $kos->kategori = $request->kategori;
-        // $kos->id_kategoris = $request->id_kategoris;
-        // $kos->id_jenis_kos = $request->id_jenis_kos;
 
         $kos->save();
 

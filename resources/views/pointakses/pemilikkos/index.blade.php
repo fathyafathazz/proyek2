@@ -122,7 +122,7 @@
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                         Pendapatan</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        Rp. {{ number_format($totalPemesanan, 0, ',', '.') }}
+                                        Rp. {{ number_format($totalPemesananSudahBayar, 0, ',', '.') }}
                                     </div>
                                 </div>
                                 <div class="col-auto">

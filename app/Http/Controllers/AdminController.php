@@ -10,7 +10,7 @@ class AdminController extends Controller
 {
     function index(){
         // Mendapatkan total pemesanan
-        $totalPemesanan = Pemesanan::sum('total_pemesanan');
+        $totalPemesananSudahBayar = Pemesanan::where('status', 'Sudah Bayar')->sum('total_pemesanan');
 
         // Mendapatkan jumlah user pemilik kos
         $jumlahPemilikKos = User::where('role', 'pemilikkos')->count();
@@ -21,7 +21,7 @@ class AdminController extends Controller
         // Variabel totalUsers digunakan untuk menghitung persentase user pemilik kos
         $totalUsers = User::count();
         return view('pointakses/admin/index', [
-            'totalPemesanan' => $totalPemesanan,
+            'totalPemesananSudahBayar' => $totalPemesananSudahBayar,
             'jumlahPemilikKos' => $jumlahPemilikKos,
             'jumlahPencariKos' => $jumlahPencariKos,
             'totalUsers' => $totalUsers, // Menambahkan variabel totalUsers

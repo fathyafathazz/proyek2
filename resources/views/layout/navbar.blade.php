@@ -117,7 +117,7 @@
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                                 href="/home"><i class="fa-solid fa-house me-1"></i>Home</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                                href="/history"><i class="fa-solid fa-receipt me-1"></i>Booking</a></li>
+                                href="/history"><i class="fa-solid fa-clock-rotate-left me-1"></i>History</a></li>
                         <li class="nav-item mx-0 mx-lg-0">
                             <a class="nav-link py-2 px-0 px-lg-2 rounded" data-toggle="modal" data-target="#logoutModal"
                                 href="#">

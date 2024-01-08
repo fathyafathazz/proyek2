@@ -1,5 +1,5 @@
 @extends('layout.index') 
-
+@section('title', 'Hasil Pencarian')
 @section('content')
 <style>
     .btn-outline-primary {

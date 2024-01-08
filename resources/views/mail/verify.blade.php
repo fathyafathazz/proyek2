@@ -38,7 +38,7 @@
         <br><br><br>
         <center>
             <h3>Klik di bawah ini untuk verifikasi akun Anda : </h3>
-            <a href="{{$details['url']}}" style="text-decoration: none;color: rgb(255,255,255); padding: 9px; background-color: blue; font: bold; border-radius: 20%">Verifikasi</a>
+            <a href="{{$details['url']}}" style="text-decoration: none;color: rgb(255,255,255); padding: 9px; background-color: #1CBB9C; font: bold; border-radius: 20%">Verifikasi</a>
             <br><br><br>
             <p>
                 Copy right @ 2023 | KosConnect

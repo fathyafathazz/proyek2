@@ -24,12 +24,15 @@ class Pemesanan extends Model
         'jenis_kelamin',
         'id_user',
         'id_kamar_kos',
+        'id_admin',
         'status',
         'total_pemesanan',
+        'verified_by',
     ];
     // Cast kolom waktu menjadi tipe data datetime
     protected $casts = [
         'tanggal_pemesanan' => 'datetime',
+        'tanggal_verifikasi' => 'datetime',
     ];
 
     // Relasi dengan model User (Pemesan)

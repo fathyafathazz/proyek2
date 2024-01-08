@@ -1,4 +1,3 @@
-
 @extends('layout.index')
 @section('title', 'Detail Pesanan')
 @if (Auth::user()->role == 'admin')
@@ -61,7 +60,8 @@
     <div class="row justify-content-center" style="margin-bottom: 35px;">
         @if (Auth::user()->role != 'admin')
             <div class="col-12 mt-3 mb-3">
-                <a href="{{ url()->previous() }}" class="btn" style="background-color: #1abc9c; color: white;"><i class="fas fa-arrow-left mr-2"></i>Kembali</a>
+                <a href="{{ url()->previous() }}" class="btn" style="background-color: #1abc9c; color: white;"><i
+                        class="fas fa-arrow-left mr-2"></i>Kembali</a>
             </div>
         @else
             <div class="col-12">
@@ -72,10 +72,11 @@
                     <div class="col h5 font-weight-bold" style="margin-bottom: 0">Detail Pemesanan</div>
                     <div class="col-auto d-flex align-items-center">
                         <div class="title-icon">
-                            <img src="{{ asset('halaman_depan/assets/img/logokos.png') }}" alt="" class="w-45" style="height: 45px;">
+                            <img src="{{ asset('halaman_depan/assets/img/logokos.png') }}" alt="" class="w-45"
+                                style="height: 45px;">
                         </div>
                         <div class="title-text h5 ml-1" style="color: #1abc9c;"><strong>KosConnect</strong></div>
-                    </div>                    
+                    </div>
                 </div>
             </div>
             <div class="card-body">
@@ -116,36 +117,46 @@
                 <table class="table">
                     <tr>
                         <td>Nama Pemesan</td>
-                        <td class="text-right">{{ $pemesanan->nama_pemesan }}</td>
+                        <td style="text-align: right;">{{ $pemesanan->nama_pemesan }}</td>
                     </tr>
                     <tr>
                         <td>Alamat Pemesan</td>
-                        <td class="text-right">{{ $pemesanan->alamat_pemesan }}</td>
+                        <td style="text-align: right;">{{ $pemesanan->alamat_pemesan }}</td>
                     </tr>
                     <tr>
                         <td>Total Pesanan</td>
-                        <td class="text-right">Rp. {{ number_format($pemesanan->total_pemesanan, 0, ',', '.') }}</td>
+                        <td style="text-align: right;">Rp. {{ number_format($pemesanan->total_pemesanan, 0, ',', '.') }}</td>
                     </tr>
                     <tr>
                         <td>Status Pembayaran</td>
-                        <td class="text-right">{{ $pemesanan->status }}</td>
+                        <td style="text-align: right;">{{ $pemesanan->status }}</td>
                     </tr>
                     @if ($pemesanan->status == 'Sudah Bayar')
-                    <tr>
-                        <td>Di Verifikasi oleh</td>
-                        <td class="text-right">
-                            {{ $pemesanan->verified_by ?? '-' }} </td>
-                    </tr>
-                @endif
+                        <tr>
+                            <td>Di Verifikasi oleh</td>
+                            <td style="text-align: right;">
+                                {{ $pemesanan->verified_by ?? '-' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Verifikasi</td>
+                            <td style="text-align: right;">
+                                {{ $pemesanan->tanggal_verifikasi->format('l, d F Y H:i:s') ?? '-' }}
+                                {{-- {{ optional($pemesanan->tanggal_verifikasi)->format('d-m-Y H:i:s') ?? '-' }} --}}
+                            </td>
+                        </tr>
+                    @endif
+
                 </table>
             </div>
             @if ($pemesanan->status == 'Belum Bayar' && Auth::user()->role == 'admin')
                 <div class="card-body">
-                    <a href="{{ route('pembayaran', $pemesanan->id) }}" class="btn btn-block btn-sm text-white" style="background-color: #1abc9c; color: white;">Verifikasi</a>
-                    
+                    <a href="{{ route('pembayaran', $pemesanan->id) }}" class="btn btn-block btn-sm text-white"
+                        style="background-color: #1abc9c; color: white;">Verifikasi</a>
+
                 </div>
             @endif
-           
+
         </div>
     </div>
     </div>

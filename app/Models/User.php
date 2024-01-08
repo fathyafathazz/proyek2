@@ -61,4 +61,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function pemesanan()
+    {
+        return $this->hasMany(Pemesanan::class);
+    }
+    public function kos()
+{
+    return $this->hasMany(Kos::class, 'id_pemilikkos');
+}
 }

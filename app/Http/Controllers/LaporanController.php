@@ -46,19 +46,39 @@ class LaporanController extends Controller
         }
     }
 
+
+
+    // ...
+
     public function pembayaran($id)
     {
+        // Temukan pemesanan berdasarkan ID
         $pemesanan = Pemesanan::with('admin')->find($id);
 
         if (!$pemesanan) {
             return redirect()->back()->with('error', 'Pemesanan tidak ditemukan!');
         }
 
-        $pemesanan->update([
-            'status' => 'Sudah Bayar',
-            'verified_by' => Auth::user()->fullname,
-        ]);
+        // Pastikan status pemesanan adalah 'Belum Bayar'
+        if ($pemesanan->status == 'Belum Bayar') {
+            // Dapatkan nama admin yang melakukan verifikasi
+            $adminFullName = Auth::user()->fullname;
+            date_default_timezone_set('Asia/Jakarta');
+            // Dapatkan waktu verifikasi saat ini
+            // $currentDateTime = Carbon::now('Asia/Jakarta');
 
-        return redirect()->back()->with('success', 'Pembayaran Kosan Success!');
+            // Perbarui informasi verifikasi pada pemesanan
+            $pemesanan->update([
+                'status' => 'Sudah Bayar',
+                'verified_by' => $adminFullName,
+                'tanggal_verifikasi' => date('Y-m-d H:i:s'), // Ubah cara menyimpan datetime  Carbon::now()
+            ]);
+
+            // Redirect atau lakukan tindakan lain setelah verifikasi
+            return redirect()->back()->with('success', 'Pembayaran Kosan berhasil diverifikasi.');
+        } else {
+            // Status pemesanan tidak sesuai, lakukan tindakan yang sesuai
+            return redirect()->back()->with('error', 'Status pemesanan tidak memungkinkan untuk diverifikasi pembayaran.');
+        }
     }
 }
