@@ -16,9 +16,21 @@ class KamarKos extends Model
         'harga_sewa',
         'fasilitas_kamar',
         'jumlah_kamar_tersedia',
-        'gambar',
     ];
+    // untuk menampilkan lebih dari 1 gambar
+     // Relasi dengan model GambarKamar
+    public function gambarKamar()
+    {
+        return $this->hasMany('App\Models\GambarKamar', 'id_kamar_kos');
+    }
+    // Method untuk mendapatkan gambar
+    public function getGambar()
+    {
+        // Ambil data gambar dari relasi gambarKamar
+        $gambar = $this->gambarKamar->pluck('gambar')->toArray();
 
+        return $gambar;
+    }
     // Relasi dengan model Kos
     public function kos()
     {
@@ -29,8 +41,11 @@ class KamarKos extends Model
     {
         return $this->hasMany('App\Models\Pemesanan', 'id_kamar_kos');
     }
+    public function fasilitasCustom()
+    {
+        return $this->belongsToMany(FasilitasCustom::class, 'kamar_kos_fasilitas_custom', 'id_kamar_kos', 'id_fasilitas_custom');
+    }
     protected $table = 'kamar_kos';
-     protected $primaryKey = 'id'; // Tentukan primary key
-     public $incrementing = false; // Atur agar tidak auto increment
-
+    protected $primaryKey = 'id'; // Tentukan primary key
+    public $incrementing = false; // Atur agar tidak auto increment
 }

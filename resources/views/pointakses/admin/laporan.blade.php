@@ -76,6 +76,7 @@
                     <h6 class="collapse-header">Manajemen Kos:</h6>
                     <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
                     <a class="collapse-item" href="{{ route('kamar_kos') }}">Kamar Kos</a>
+                    <a class="collapse-item" href="{{ route('fasilitas_custom') }}">Fasilitas Custom</a>
                 </div>
             </div>
         </li>
@@ -189,12 +190,12 @@
                                         <p class="card-text">
                                             @if (Auth::user()->role == 'admin')
                                             <small class="text-muted">
-                                                Kos {{ $data->kamarKos->kos->kategori }} - Milik
+                                                 {{ $data->kamarKos->kos->kategori }} - Milik
                                                 {{ $data->kamarKos->kos->pemilikkos->fullname }}
                                             </small>
                                         @else
                                         <small class="text-muted">
-                                            Kos {{ $data->kamarKos->kos->kategori }}
+                                         {{ $data->kamarKos->kos->kategori }}
                                         </small>
                                         @endif
                                 
@@ -211,7 +212,7 @@
                                         </p>
                                     </td>
                                     <td>
-                                        <h5 class="card-title">Rp. {{ number_format($data->total_pemesanan) }}</h5>
+                                        <h5 class="card-title">Rp. {{ number_format($data->total_pemesanan, 0, ',', '.') }}</h5>
                                         <p class="card-text">
                                             <small class="text-muted">
                                                 {{ date('l, d F Y H:i', strtotime($data->tanggal_pemesanan)) ?? 'Nomor Kamar Tidak Tersedia' }}

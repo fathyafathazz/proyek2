@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Pemesanan extends Model
 {
     use HasFactory;
-
-    protected $table = 'pemesanan'; // sesuaikan dengan nama tabel yang sebenarnya
-    protected $primaryKey = 'id'; // Tentukan primary key
-    protected $keyType = 'string'; // Tentukan tipe data primary key
-    public $incrementing = false; // Non-aktifkan auto-increment untuk primary key
+    protected $table = 'pemesanan'; 
+    protected $primaryKey = 'id'; 
+    protected $keyType = 'string'; 
+    public $incrementing = false;
 
 
     protected $fillable = [
@@ -28,11 +27,13 @@ class Pemesanan extends Model
         'status',
         'total_pemesanan',
         'verified_by',
+        'selected_fasilitas_custom',
     ];
     // Cast kolom waktu menjadi tipe data datetime
     protected $casts = [
         'tanggal_pemesanan' => 'datetime',
         'tanggal_verifikasi' => 'datetime',
+        'selected_fasilitas_custom' => 'array',
     ];
 
     // Relasi dengan model User (Pemesan)
@@ -58,9 +59,7 @@ class Pemesanan extends Model
         return $this->belongsTo(Kos::class, 'id_kamar_kos')->with('pemilikkos');
     }
     public function admin()
-{
-    return $this->belongsTo(User::class, 'id_admin');
+    {
+        return $this->belongsTo(User::class, 'id_admin');
+    }
 }
-
-}
-

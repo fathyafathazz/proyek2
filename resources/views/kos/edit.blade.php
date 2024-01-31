@@ -5,7 +5,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="/pemilikkos">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span {{route('pemilikkos')}}>Dashboard</span></a>
     </li>
@@ -30,6 +30,7 @@
                 <h6 class="collapse-header">Manajemen Kos:</h6>
                 <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
                 <a class="collapse-item" href="{{ route('kamar_kos') }}">Kamar Kos</a>
+                <a class="collapse-item" href="{{ route('fasilitas_custom') }}">Fasilitas Custom</a>
             </div>
         </div>
     </li>
@@ -102,12 +103,7 @@
                                 <option value="Putra">Kos Putra</option>
                                 <option value="Putri">Kos Putri</option>
                             </select>
-                        </div>   
-                        {{-- <div class="form-group">
-                            <label for="kategori">Kategori</label>
-                            <input type="text" class="form-control" id="kategori" name="kategori"
-                                 required>
-                        </div> --}}
+                        </div>  
                         <button type="submit" class="btn btn-primary me-2">Edit</button>
                         <a href="/kos" class="btn btn-light">Kembali</a>
                     </form>

@@ -5,9 +5,9 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{ route('pemilikkos') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span {{ route('pemilikkos') }}>Dashboard</span></a>
+            <span >Dashboard</span></a>
     </li>
 
     <!-- Divider -->
@@ -30,6 +30,7 @@
                 <h6 class="collapse-header">Manajemen Kos:</h6>
                 <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
                 <a class="collapse-item" href="{{ route('kamar_kos') }}">Kamar Kos</a>
+                <a class="collapse-item" href="{{ route('fasilitas_custom') }}">Fasilitas Custom</a>
             </div>
         </div>
     </li>
@@ -65,8 +66,8 @@
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
-                            @foreach ($errors->all() as $item)
-                                <li>{{ $item }}</li>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
                             @endforeach
                         </ul>
                     </div>
@@ -77,8 +78,8 @@
                         <label for="id_kos">Nama Kos</label>
                         <select class="select2 form-control" id="id_kos" name="id_kos" required>
                             <option value="" disabled selected>-- Pilih Kos --</option>
-                            @foreach ($kos as $kos)
-                                <option value="{{ $kos->id }}">{{ $kos->nama_kos }}</option>
+                            @foreach ($kos as $item)
+                                <option value="{{ $item->id }}">{{ $item->nama_kos }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -87,7 +88,6 @@
                         <input type="text" class="form-control" id="nomor_kamar" placeholder="Tipe A/No. 1 dsb"
                             name="nomor_kamar" required>
                     </div>
-
                     <div class="form-group">
                         <label for="ukuran_kamar">Ukuran Kamar</label>
                         <input type="text" class="form-control" id="ukuran_kamar"
@@ -118,17 +118,12 @@
                         <input type="number" class="form-control" id="jumlah_kamar_tersedia"
                             placeholder="12"
                             name="jumlah_kamar_tersedia" required>
-                    </div>                    
-                    <div class="mb-3">
-                        <label for="gambar" class="form-label">Gambar</label>
-                        <input class="form-control" type="file" id="gambar" name="gambar">
-                    </div>
+                    </div>                                  
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">Tambah</button>
                         <a href="/kamar_kos" class="btn btn-light">Kembali</a>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -146,5 +141,4 @@
         e.target.value = value;
     });
 </script>
-
 @endsection

@@ -31,10 +31,18 @@
             @foreach ($data as $p)
                 <div class="card" style="width:320px;">
                     
-                    <div class="card-header m-auto" style="height:100%;width:100%;"><a href="{{ route('user.detail', ['id' => $p->id]) }}">
-                        <img src="{{ asset('public/kamar_kos/' . $p->gambar) }}" alt="kamar kos"
-                            style="width: 100%; height:200px; object-fit: cover; padding:0;"></a>
+                    <div class="card-header m-auto" style="height:100%;width:100%;">
+                        <a href="{{ route('user.detail', ['id' => $p->id]) }}">
+                            @if($p->gambarKamar->isNotEmpty())
+                                <img src="{{ asset('public/kamar_kos/' . $p->gambarKamar->first()->gambar) }}" alt="kamar kos"
+                                    style="width: 100%; height:200px; object-fit: cover; padding:0;">
+                            @else
+                                <img src="{{ asset('path/to/default/image.jpg') }}" alt="Default Image"
+                                    style="width: 100%; height:200px; object-fit: cover; padding:0;">
+                            @endif
+                        </a>
                     </div>
+                    
                     <div class="card-body">
                         <p class="m-0 text-justify" style="font-size: 16px; font-weight:600;"><a href="{{ route('user.detail', ['id' => $p->id]) }}" style="color: #359690">
                             Kategori: 
@@ -51,6 +59,8 @@
                         <p class="m-0 text-justify" style="font-size: 16px; font-weight:600;"><a href="{{ route('user.detail', ['id' => $p->id]) }}">{{ $p->nomor_kamar }}, {{ $p->kos->nama_kos }} </a></p>
                         {{-- <p class="m-0 text-justify" style="font-size: 16px; font-weight:600;">{{ $p->kos->nama_kos }}</p> --}}
                         <p class="m-0 text-justify"><a href="{{ route('user.detail', ['id' => $p->id]) }}">Alamat Kos: {{ $p->kos->alamat_kos }} </a></p>
+                        <p class="m-0 text-justify"><a href="{{ route('user.detail', ['id' => $p->id]) }}">Kamar Tersedia: {{ $p->jumlah_kamar_tersedia }} </a></p>
+                        
                     </div>
                     
                     <div class="card-footer d-flex flex-row justify-content-between align-items-center">

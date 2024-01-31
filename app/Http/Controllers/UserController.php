@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kos;  // Import model KamarKos
-use App\Models\KamarKos;  // Import model KamarKos
+use App\Models\KamarKos;  
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -18,9 +16,9 @@ class UserController extends Controller
     {
         $id = Str::isUuid($id) ? $id : Str::uuid();
 
-        //mengambil detail produk
-        $data = KamarKos::with('kos')->findOrFail($id);
-        return view('pointakses.user.detail', [ 'data' => $data]);
+        // Mengambil detail kamar kos beserta gambar-gambar dari tabel gambar_kamar
+        $kamar = KamarKos::with('kos', 'gambarKamar')->findOrFail($id);
+
+        return view('pointakses.user.detail', ['kamar' => $kamar]);
     }
-   
 }

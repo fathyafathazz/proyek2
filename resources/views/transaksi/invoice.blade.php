@@ -25,7 +25,6 @@
                 "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
 
-
         .title {
             color: #1abc9c;
             text-decoration: none;
@@ -80,7 +79,6 @@
                 </div>
             </div>
             <div class="card-body">
-                {{-- {{ $data->rute->tujuan }} --}}
                 <div class="font-weight-bold h4 text-center" style="margin-bottom: 0">
                     {{ $pemesanan->kamarKos->kos->nama_kos }} </div>
                 <div class="font-weight-bold h4 text-center" style="margin-bottom: 0">
@@ -89,11 +87,9 @@
                     {{ $pemesanan->kamarKos->nomor_kamar }}, Kos {{ $pemesanan->kamarKos->kos->kategori }}, Ukuran Kamar
                     {{ $pemesanan->kamarKos->ukuran_kamar }} </div>
                 <div class="row no-gutters align-items-center justify-content-center">
-
                     <div class="col px-3">
                         <div style="border-top: 1px solid black"></div>
                     </div>
-
                 </div>
             </div>
             <div class="card-body">
@@ -120,12 +116,40 @@
                         <td style="text-align: right;">{{ $pemesanan->nama_pemesan }}</td>
                     </tr>
                     <tr>
+                        <td>Jenis Kelamin</td>
+                        <td style="text-align: right;">{{ $pemesanan->jenis_kelamin }}</td>
+                    </tr>
+                    <tr>
+                    <tr>
                         <td>Alamat Pemesan</td>
                         <td style="text-align: right;">{{ $pemesanan->alamat_pemesan }}</td>
                     </tr>
                     <tr>
-                        <td>Total Pesanan</td>
-                        <td style="text-align: right;">Rp. {{ number_format($pemesanan->total_pemesanan, 0, ',', '.') }}</td>
+                        <td>Nomor Telepon</td>
+                        <td style="text-align: right;">{{ $pemesanan->nomor_telepon }}</td>
+                    </tr>
+                    <tr>
+                        <td>Fasilitas Custom yang Dipilih</td>
+                        <td style="text-align: right;">
+                            @if ($pemesanan->selected_fasilitas_custom && count($pemesanan->selected_fasilitas_custom) > 0)
+                                @foreach ($pemesanan->selected_fasilitas_custom as $fasilitasId)
+                                    @php
+                                        $fasilitas = \App\Models\FasilitasCustom::find($fasilitasId);
+                                    @endphp
+                                    @if ($fasilitas)
+                                        {{ $fasilitas->nama }}
+                                        @if (!$loop->last)
+                                            ,
+                                        @endif
+                                    @endif
+                                @endforeach
+                            @else
+                                Tidak Ada Fasilitas yang Dipilih.
+                            @endif
+                        </td>
+                    </tr>
+                    <td>Total Pesanan</td>
+                    <td style="text-align: right;">Rp. {{ number_format($pemesanan->total_pemesanan, 0, ',', '.') }}</td>
                     </tr>
                     <tr>
                         <td>Status Pembayaran</td>
@@ -146,17 +170,14 @@
                             </td>
                         </tr>
                     @endif
-
                 </table>
             </div>
             @if ($pemesanan->status == 'Belum Bayar' && Auth::user()->role == 'admin')
                 <div class="card-body">
                     <a href="{{ route('pembayaran', $pemesanan->id) }}" class="btn btn-block btn-sm text-white"
                         style="background-color: #1abc9c; color: white;">Verifikasi</a>
-
                 </div>
             @endif
-
         </div>
     </div>
     </div>

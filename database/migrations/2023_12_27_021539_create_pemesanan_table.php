@@ -34,6 +34,7 @@ class CreatePemesananTable extends Migration
             $table->enum('status', ['Belum Bayar', 'Sudah Bayar'])->default('Belum Bayar');
             $table->string('verified_by')->nullable();
             $table->timestamp('tanggal_verifikasi')->useCurrent();
+            $table->text('selected_fasilitas_custom')->nullable();
             $table->timestamps();
 
 

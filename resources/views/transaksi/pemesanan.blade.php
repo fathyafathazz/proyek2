@@ -1,5 +1,5 @@
 @extends('layout.index')
-@section('title',"Booking")
+@section('title', 'Booking')
 @section('content')
     <style>
         .btn-primary {
@@ -55,22 +55,17 @@
                         </ul>
                     </div>
                 @endif
-
                 <form class="forms-sample" method="POST" action="{{ route('checkout') }}" enctype="multipart/form-data">
                     @csrf
-                    
-                        <input type="hidden" name="id_kamar_kos" value="{{ $data->id }}">
-
-
+                    <input type="hidden" name="id_kamar_kos" value="{{ $data->id }}">
                     <div class="container">
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <label for="nama_pemesan">Nama Pemesan</label>
                                     <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan"
-                                       value="{{Auth::user()->fullname}}" required>
+                                        value="{{ Auth::user()->fullname }}" required>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="nomor_telepon">Nomor Telepon</label>
                                     <input type="text" class="form-control" id="nomor_telepon" name="nomor_telepon"
@@ -83,7 +78,6 @@
                                     <input type="text" class="form-control" id="alamat_pemesan" name="alamat_pemesan"
                                         required>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="jenis_kelamin">Jenis Kelamin</label>
                                     <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required>
@@ -91,6 +85,23 @@
                                         <option value="Laki-laki">Laki-laki</option>
                                         <option value="Perempuan">Perempuan</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Fasilitas Custom</label><br>
+                                    @foreach ($data->fasilitasCustom as $fasilitas)
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" class="form-check-input fasilitas-checkbox"
+                                                id="fasilitas_{{ $fasilitas->id }}" name="fasilitas_custom[]"
+                                                value="{{ $fasilitas->id }}" data-harga="{{ $fasilitas->harga }}">
+                                            <label class="form-check-label" for="fasilitas_{{ $fasilitas->id }}">
+                                                {{ $fasilitas->nama }} - Rp{{ number_format($fasilitas->harga) }}
+                                            </label>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -113,7 +124,6 @@
                                             value="{{ number_format($data->harga_sewa) }}" readonly>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="col">
                                 <div class="form-group">
@@ -130,7 +140,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="d-grid gap-2 mt-3">
                         <button type="submit" class="btn btn-primary" style="background-color: #1CBB9C; color:#fff">Pesan
                             Sekarang</button>
@@ -145,37 +154,40 @@
             const jumlahKamarInput = document.getElementById('jumlah_kamar');
             const hargaSewaInput = document.getElementById('harga_sewa');
             const totalPemesananInput = document.getElementById('total_pemesanan');
-
+            const fasilitasCheckboxes = document.querySelectorAll('.fasilitas-checkbox');
             // Fungsi untuk memformat nilai ke dalam format mata uang dengan simbol koma dan titik
             function formatToCurrency(value) {
                 return new Intl.NumberFormat('id', {
                     style: 'currency',
                     currency: 'IDR',
-                    minimumFractionDigits: 0, // Menetapkan jumlah digit minimum di belakang koma
-                    maximumFractionDigits: 0 // Menetapkan jumlah digit maksimum di belakang koma
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
                 }).format(value);
             }
-
             // Fungsi untuk menghitung total pemesanan
             function updateTotalPemesanan() {
                 const jumlahKamar = parseInt(jumlahKamarInput.value);
                 const hargaSewa = parseInt('{{ $data->harga_sewa }}');
-
-                const totalPemesanan = jumlahKamar * hargaSewa;
-
+                // Menghitung total pemesanan dari jumlah kamar dan harga sewa
+                let totalPemesanan = jumlahKamar * hargaSewa;
+                // Menambahkan biaya fasilitas custom yang dipilih
+                fasilitasCheckboxes.forEach(function(checkbox) {
+                    if (checkbox.checked) {
+                        const hargaFasilitas = parseInt(checkbox.getAttribute('data-harga'));
+                        totalPemesanan += hargaFasilitas;
+                    }
+                });
                 // Set nilai total_pemesanan pada input dengan format mata uang
                 totalPemesananInput.value = formatToCurrency(totalPemesanan);
             }
-
             // Tambahkan event listener untuk perubahan nilai jumlah_kamar
             jumlahKamarInput.addEventListener('input', updateTotalPemesanan);
-
+            // Tambahkan event listener untuk perubahan status checkbox fasilitas
+            fasilitasCheckboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', updateTotalPemesanan);
+            });
             // Panggil fungsi pertama kali untuk menginisialisasi nilai
             updateTotalPemesanan();
         });
     </script>
-
-
-
-
 @endsection

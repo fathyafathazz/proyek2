@@ -9,7 +9,7 @@ use App\Http\Controllers\FasilitasKamarController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\JenisKosController;
-use App\Http\Controllers\FasilitasController;
+use App\Http\Controllers\FasilitasCustomController;
 use App\Http\Controllers\KosController;
 use App\Http\Controllers\UproleController;
 use App\Http\Controllers\UserControlController;
@@ -45,13 +45,12 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin')->middleware('userAkses:admin');
     Route::get('/pemilikkos', [PemilikkosController::class, 'index'])->name('pemilikkos')->middleware('userAkses:pemilikkos');
-    Route::get('/home', [UserController::class, 'index'])->name('user.index')->middleware('userAkses:user');
+    Route::get('/home', [UserController::class, 'index'])->name('user')->middleware('userAkses:user');
 
 
     //user
     Route::get('/user/detail/{id}', [UserController::class, 'detail'])->name('user.detail')->middleware('userAkses:user');
     Route::get('/search', [SearchController::class, 'searchByCategory'])->name('search');
-    Route::get('/user', [UserController::class, 'index']); // Route untuk menampilkan daftar kamar kos
     Route::get('/transaksi/pemesanan/{id}', [PemesananController::class, 'index'])->name('pemesanan.index');
     Route::post('/pemesanan', [PemesananController::class, 'create'])->name('checkout');
     Route::get('/history', [PemesananController::class, 'history'])->name('history');
@@ -76,17 +75,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pesanan', [LaporanController::class, 'pemilikKos'])->name('pesanan');
 
 
-
-   
-
-
-
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
     //kos
     Route::get('/kos', [KosController::class, 'index'])->name('kos');
-    Route::get('/kostambah/', [KosController::class, 'tambah']);
+    Route::get('/kostambah', [KosController::class, 'tambah']);
     Route::post('/tambahkos', [KosController::class, 'create']);
     Route::get('/kosedit/{id}', [KosController::class, 'edit']);
     Route::post('/editkos', [KosController::class, 'change']);
@@ -99,4 +93,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/kamarkosedit/{id}', [KamarKosController::class, 'edit']);
     Route::post('/editkamarkos', [KamarKosController::class, 'change']);
     Route::post('/kamarkoshapus/{id}', [KamarKosController::class, 'hapus']);
+    Route::get('/kamar_kos/{id}/tambah-gambar', [KamarKosController::class, 'tambahGambar'])->name('kamar_kos.tambah_gambar');
+    Route::post('/kamar_kos/store/gambar/{id}', [KamarKosController::class, 'storeGambarKamarKos'])->name('kamar_kos.store.gambar');
+    Route::get('/kamar_kos/tambah_fasilitascustom/{id}', [KamarKosController::class, 'tambahFasilitasCustom'])->name('kamar_kos.tambah_fasilitascustom');
+    Route::post('/kamar_kos/{id}/fasilitas_custom', [KamarKosController::class, 'storeFasilitasCustom'])->name('kamar_kos.storeFasilitasCustom');
+
+    //fasilitas custom
+    Route::get('/fasilitas_custom', [FasilitasCustomController::class, 'index'])->name('fasilitas_custom');
+    Route::get('/fasilitas_customtambah/', [FasilitasCustomController::class, 'tambah']);
+    Route::post('/tambahfasilitas_custom', [FasilitasCustomController::class, 'create']);
+    Route::get('/fasilitas_customedit/{id}', [FasilitasCustomController::class, 'edit']);
+    Route::post('/editfasilitas_custom', [FasilitasCustomController::class, 'change']);
+    Route::post('/fasilitas_customhapus/{id}', [FasilitasCustomController::class, 'hapus']);
 });

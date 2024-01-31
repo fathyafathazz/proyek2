@@ -5,7 +5,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="/pemilikkos">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span {{ route('pemilikkos') }}>Dashboard</span></a>
     </li>
@@ -30,6 +30,7 @@
                 <h6 class="collapse-header">Manajemen Kos:</h6>
                 <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
                 <a class="collapse-item" href="{{ route('kamar_kos') }}">Kamar Kos</a>
+                <a class="collapse-item" href="{{ route('fasilitas_custom') }}">Fasilitas Custom</a>
             </div>
         </div>
     </li>
@@ -86,8 +87,8 @@
 
                     <div class="form-group">
                         <label for="nama_kos">Nama Kos</label>
-                        <input type="text" class="form-control" id="nama_kos" placeholder="Kos Pelangi"
-                            name="nama_kos" required>
+                        <input type="text" class="form-control" id="nama_kos" placeholder="Kos Pelangi" name="nama_kos"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="alamat_kos">Alamat Kos</label>
@@ -98,12 +99,12 @@
                     <div class="form-group">
                         <label for="keterangan_kos">Keterangan Kos</label>
                         <input class="form-control" id="keterangan_kos" placeholder="Lokasi strategis, Aturan Jam Malam"
-                            name="keterangan_kos" required >
+                            name="keterangan_kos" required>
                     </div>
                     <div class="form-group">
                         <label for="fasilitas">Fasilitas Kos</label>
-                        <input type="text" class="form-control" id="fasilitas" placeholder="Dapur Bersama, Kamar Mandi luar dsb"
-                            name="fasilitas" required>
+                        <input type="text" class="form-control" id="fasilitas"
+                            placeholder="Dapur Bersama, Kamar Mandi luar dsb" name="fasilitas" required>
                     </div>
                     <div class="form-group">
                         <label for="kategori">Kategori Kos</label>
@@ -113,60 +114,7 @@
                             <option value="Putra">Kos Putra</option>
                             <option value="Putri">Kos Putri</option>
                         </select>
-                    </div>                    
-                    {{-- <div class="form-group">
-                        <label for="id_kategoris">Kategori</label>
-                        <select class="select2 form-control" id="id_kategoris" name="id_kategoris" required>
-                            <option value="" disabled selected>-- Pilih Kategori --</option>
-                            @foreach ($kategoris as $kategoris)
-                                <option value="{{ $kategoris->id }}">{{ $kategoris->nama_kategori }}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
-                    {{-- <div class="form-group">
-                        <label for="id_jenis_kos">Jenis Kos:</label>
-                        <select class="select2 form-control" id="id_jenis_kos" name="id_jenis_kos" required>
-                            <option value="" disabled selected>-- Pilih Jenis Kos --</option>
-                            @foreach ($jeniskos as $jeniskos)
-                                <option value="{{ $jeniskos->id }}">{{ $jeniskos->nama_jenis_kos }}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
-                    
-                    {{-- {{-- <form action="code.php"> --}}
-                    {{-- <label for="fasilitas">Fasilitas Kos</label>
-                        <input type="checkbox" class="btn-check" id="id_fasilitas" autocomplete="off"
-                            name="fasilitas[]" onclick="submitFasilitas()" multiple required>
-
-                        @foreach ($fasilitas as $fasilitasItem)
-                            <label class="btn btn-outline-primary" for="btn-check-{{ $fasilitasItem->id }}">
-                                <input type="checkbox" class="btn-check" id="btn-check-{{ $fasilitasItem->id }}"
-                                    name="fasilitas[]" value="{{ $fasilitasItem->id }}" onclick="submitFasilitas()">
-                                {{ $fasilitasItem->nama_fasilitas }}
-                            </label>
-                        @endforeach --}}
-                    {{-- </form> --}}
-
-
-                    {{-- <input type="checkbox" class="btn-check" id="id_fasilitas" checked autocomplete="off"
-                        name="fasilitas[]" multiple required>
-                    
-                        <label class="btn btn-outline-primary btn-sm" for="btn-check-2"
-                            >{{ $fasilitas->nama_fasilitas }}</label>
-                     --}}
-                    {{-- <div class="input-group mb-3">
-                        <label for="fasilitas">Fasilitas Kos</label>
-                        <select class="select2 form-control" id="id_fasilitas" name="fasilitas[]" multiple required aria-describedby="button-addon2">
-                            <option value="" disabled selected>-- Pilih Fasilitas Kos --</option>
-                            @foreach ($fasilitas as $fasilitas)
-                                <option value="{{ $fasilitas->id }}">{{ $fasilitas->nama_fasilitas }}</option>
-                            @endforeach
-                        </select>
-                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2" onclick="submitFasilitas()">Simpan Fasilitas</button>
                     </div>
-                    <div id="fasilitas-terpilih">
-                    </div> --}}
-                    {{-- <input type="hidden" name="id_pemilikkos" value="{{ Auth::user()->id }}"> --}}
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">Tambah</button>
                         <a href="/kos" class="btn btn-light">Kembali</a>

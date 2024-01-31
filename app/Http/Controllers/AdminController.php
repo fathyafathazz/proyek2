@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Pemesanan;
 use App\Models\User;
 
 class AdminController extends Controller
 {
-    function index(){
+    function index()
+    {
         // Mendapatkan total pemesanan
         $totalPemesananSudahBayar = Pemesanan::where('status', 'Sudah Bayar')->sum('total_pemesanan');
 
@@ -27,6 +27,4 @@ class AdminController extends Controller
             'totalUsers' => $totalUsers, // Menambahkan variabel totalUsers
         ]);
     }
-    
 }
-

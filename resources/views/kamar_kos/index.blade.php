@@ -5,10 +5,12 @@
 
      <!-- Nav Item - Dashboard -->
      <li class="nav-item active">
-         <a class="nav-link" href="/pemilikkos">
+         <a class="nav-link" href="{{ route('pemilikkos') }}">
              <i class="fas fa-fw fa-tachometer-alt"></i>
-             <span {{ route('pemilikkos') }}>Dashboard</span></a>
+             <span>Dashboard</span>
+         </a>
      </li>
+
 
      <!-- Divider -->
      <hr class="sidebar-divider">
@@ -30,6 +32,7 @@
                  <h6 class="collapse-header">Manajemen Kos:</h6>
                  <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
                  <a class="collapse-item" href="{{ route('kamar_kos') }}">Kamar Kos</a>
+                 <a class="collapse-item" href="{{ route('fasilitas_custom') }}">Fasilitas Custom</a>
              </div>
          </div>
      </li>
@@ -62,15 +65,12 @@
 
          <!-- Page Heading -->
          <h1 class="h3 mb-2 text-gray-800">Data Kamar Kos</h1>
-         {{-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-             For more information about DataTables, please visit the <a target="_blank"
-                 href="https://datatables.net">official DataTables documentation</a>.</p> --}}
+
 
          <!-- DataTales Example -->
          <div class="card shadow mb-4">
              <div class="card-header py-3">
-                 {{-- <h6 class="m-0 font-weight-bold text-primary mb-4">DataTables Example</h6> --}}
-                 {{-- new --}}
+
 
                  <a href="/kamarkostambah" class="btn-sm btn-primary text-decoration-none">Tambah data</a>
 
@@ -106,50 +106,69 @@
                                  <th>Keterangan</th>
                                  <th>Harga Sewa</th>
                                  <th>Fasilitas</th>
+                                 <th>Fasilitas Custom</th>
                                  <th>Jumlah Kamar Tersedia</th>
                                  <th>Gambar</th>
-                                 {{-- <th>Jenis Kos</th> --}}
+
                                  <th>Action</th>
                              </tr>
                          </thead>
                          <tfoot>
                              <tr>
-                                <th>Nama Kos</th>
+                                 <th>Nama Kos</th>
                                  <th>Nomor Kamar</th>
                                  <th>Ukuran</th>
                                  <th>Keterangan</th>
                                  <th>Harga Sewa</th>
                                  <th>Fasilitas</th>
+                                 <th>Fasilitas Custom</th>
                                  <th>Jumlah Kamar Tersedia</th>
                                  <th>Gambar</th>
-                                {{-- <th>Jenis Kos</th> --}}
-                                <th>Action</th>
+
+                                 <th>Action</th>
                              </tr>
                          </tfoot>
                          <tbody>
-                             @foreach ($data as $item)
+                             @foreach ($data as $kamar)
                                  <tr>
-                                     <td>{{ $item->Kos->nama_kos }}</td>
-                                     <td>{{ $item->nomor_kamar }}</td>
-                                     <td>{{ $item->ukuran_kamar }}</td>
-                                     <td>{{ $item->keterangan_kamar }}</td>
-                                     {{-- <td>{{ $item->harga_sewa }}</td> --}}
-                                     <td>{{ $formatHelper->formatRupiah($item->harga_sewa) }}</td>
-                                     <td>{{ $item->fasilitas_kamar }}</td>
-                                     <td>{{ $item->jumlah_kamar_tersedia }}</td>
-                                     <td>{{ $item->gambar }}</td>
-                                     {{-- <td>{{ $item->Kategori->nama_kategori }}</td>
-                                     <td>{{ $item->JenisKos->nama_jenis_kos }}</td> --}}
-                                     {{-- <td>{{ $item->fasilitas }}</td> --}}
-                                     <td><a href="/kamarkosedit/{{ $item->id }}"
-                                             class="btn-sm btn-warning text-decoration-none">Edit</a> |
-                                         <form onsubmit="return confirmHapus(event)"
-                                             action="/kamarkoshapus/{{ $item->id }}" method="post"
-                                             class="d-inline">
-                                             @csrf
-                                             <button type="submit" class="btn-sm btn-danger">Hapus</button>
-                                         </form>
+                                     <td>{{ $kamar->kos->nama_kos }}</td>
+                                     <td>{{ $kamar->nomor_kamar }}</td>
+                                     <td>{{ $kamar->ukuran_kamar }}</td>
+                                     <td>{{ $kamar->keterangan_kamar }}</td>
+                                     <td>{{ $formatHelper->formatRupiah($kamar->harga_sewa) }}</td>
+                                     <td>{{ $kamar->fasilitas_kamar }}</td>
+                                     <td>
+                                         @forelse ($kamar->fasilitasCustom as $fasilitas)
+                                             {{ $fasilitas->nama }} - {{ $formatHelper->formatRupiah($fasilitas->harga) }} <br>
+                                         @empty
+                                             Tidak ada data fasilitas custom
+                                         @endforelse
                                      </td>
+                                     <td>{{ $kamar->jumlah_kamar_tersedia }}</td>
+                                     <td>
+                                         @forelse ($kamar->getGambar() as $gambar)
+                                             <img src="{{ asset('public/kamar_kos/' . $gambar) }}" alt="Gambar Kamar"
+                                                 class="img-thumbnail">
+                                         @empty
+                                             Tidak ada gambar
+                                         @endforelse
+                                     </td>
+                                     <td>
+                                        <div class="btn-group-vertical" role="group">
+                                            <a href="/kamar_kos/tambah_fasilitascustom/{{ $kamar->id }}"
+                                                class="btn-sm btn-primary text-decoration-none mb-2">Custom</a>
+                                            <a href="{{ route('kamar_kos.tambah_gambar', ['id' => $kamar->id]) }}"
+                                                class="btn-sm btn-primary text-decoration-none mb-2">Gambar</a>
+                                            <a href="/kamarkosedit/{{ $kamar->id }}"
+                                                class="btn-sm btn-warning text-decoration-none mb-2">Edit</a>
+                                            <form onsubmit="return confirmHapus(event)"
+                                                action="/kamarkoshapus/{{ $kamar->id }}" method="post"
+                                                class="d-inline">
+                                                @csrf
+                                                <button type="submit" class="btn-sm btn-danger mb-2">Hapus</button>
+                                            </form>
+                                        </div>
+                                    </td>
                                  </tr>
                              @endforeach
                          </tbody>

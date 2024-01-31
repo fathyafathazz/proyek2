@@ -30,6 +30,8 @@
                  <h6 class="collapse-header">Manajemen Kos:</h6>
                  <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
                  <a class="collapse-item" href="{{ route('kamar_kos') }}">Kamar Kos</a>
+                 <a class="collapse-item" href="{{ route('fasilitas_custom') }}">Fasilitas Custom</a>
+                 
              </div>
          </div>
      </li>
@@ -49,7 +51,7 @@
          </div>
      </li>
 
-         <!-- Divider -->
+     <!-- Divider -->
      <hr class="sidebar-divider d-none d-md-block">
 
      <!-- Sidebar Toggler (Sidebar) -->
@@ -63,18 +65,11 @@
 
          <!-- Page Heading -->
          <h1 class="h3 mb-2 text-gray-800">Data Kos</h1>
-         {{-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-             For more information about DataTables, please visit the <a target="_blank"
-                 href="https://datatables.net">official DataTables documentation</a>.</p> --}}
 
          <!-- DataTales Example -->
          <div class="card shadow mb-4">
              <div class="card-header py-3">
-                 {{-- <h6 class="m-0 font-weight-bold text-primary mb-4">DataTables Example</h6> --}}
-                 {{-- new --}}
-
                  <a href="/kostambah" class="btn-sm btn-primary text-decoration-none">Tambah data</a>
-
                  @if ($errors->any())
                      <div class="alert alert-danger">
                          <ul>
@@ -107,20 +102,18 @@
                                  <th>Keterangan Kos</th>
                                  <th>Fasilitas Kos</th>
                                  <th>Kategori Kos</th>
-                                 {{-- <th>Jenis Kos</th> --}}
                                  <th>Action</th>
                              </tr>
                          </thead>
                          <tfoot>
                              <tr>
-                                <th>ID</th>
-                                <th>Nama Kos</th>
-                                <th>Alamat Kos</th>
-                                <th>Keterangan Kos</th>
-                                <th>Fasilitas Kos</th>
-                                <th>Kategori Kos</th>
-                                {{-- <th>Jenis Kos</th> --}}
-                                <th>Action</th>
+                                 <th>ID</th>
+                                 <th>Nama Kos</th>
+                                 <th>Alamat Kos</th>
+                                 <th>Keterangan Kos</th>
+                                 <th>Fasilitas Kos</th>
+                                 <th>Kategori Kos</th>
+                                 <th>Action</th>
                              </tr>
                          </tfoot>
                          <tbody>
@@ -132,14 +125,10 @@
                                      <td>{{ $item->keterangan_kos }}</td>
                                      <td>{{ $item->fasilitas }}</td>
                                      <td>{{ $item->kategori }}</td>
-                                     {{-- <td>{{ $item->Kategori->nama_kategori }}</td>
-                                     <td>{{ $item->JenisKos->nama_jenis_kos }}</td> --}}
-                                     {{-- <td>{{ $item->fasilitas }}</td> --}}
                                      <td><a href="/kosedit/{{ $item->id }}"
                                              class="btn-sm btn-warning text-decoration-none">Edit</a> |
-                                         <form onsubmit="return confirmHapus(event)"
-                                             action="/koshapus/{{ $item->id }}" method="post"
-                                             class="d-inline">
+                                         <form onsubmit="return confirmHapus(event)" action="/koshapus/{{ $item->id }}"
+                                             method="post" class="d-inline">
                                              @csrf
                                              <button type="submit" class="btn-sm btn-danger">Hapus</button>
                                          </form>

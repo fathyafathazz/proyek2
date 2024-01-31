@@ -38,9 +38,9 @@ class AuthController extends Controller
                 } else if (Auth::user()->role === 'user') {
                     return redirect()->route('user')->with('success', 'Berhasil login');
                 }
-                // } else{
-                //     Auth::logout();
-                //     return redirect()->route('auth')->withErrors('Akun Anda belum aktif. Harap verifikasi terlebih dahulu');
+                } else{
+                    Auth::logout();
+                    return redirect()->route('auth')->withErrors('Akun Anda belum aktif. Harap verifikasi terlebih dahulu');
             }
         } else {
             return redirect()->route('auth')->withErrors('Email atau Password salah');

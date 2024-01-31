@@ -76,6 +76,7 @@
                     <h6 class="collapse-header">Manajemen Kos:</h6>
                     <a class="collapse-item" href="{{ route('kos') }}">Kos</a>
                     <a class="collapse-item" href="{{ route('kamar_kos') }}">Kamar Kos</a>
+                    <a class="collapse-item" href="{{ route('fasilitas_custom') }}">Fasilitas Custom</a>
                 </div>
             </div>
         </li>
@@ -218,30 +219,62 @@
                     <table class="table">
                         <tr>
                             <td>Nama Pemesan</td>
-                            <td class="text-right">{{ $pemesanan->nama_pemesan }}</td>
+                            <td style="text-align: right;">{{ $pemesanan->nama_pemesan }}</td>
                         </tr>
+                        <tr>
+                            <td>Jenis Kelamin</td>
+                            <td style="text-align: right;">{{ $pemesanan->jenis_kelamin }}</td>
+                        </tr>
+                        <tr>
                         <tr>
                             <td>Alamat Pemesan</td>
-                            <td class="text-right">{{ $pemesanan->alamat_pemesan }}</td>
+                            <td style="text-align: right;">{{ $pemesanan->alamat_pemesan }}</td>
                         </tr>
                         <tr>
-                            <td>Total Pesanan</td>
-                            <td class="text-right">Rp. {{ number_format($pemesanan->total_pemesanan, 0, ',', '.') }}</td>
+                            <td>Nomor Telepon</td>
+                            <td style="text-align: right;">{{ $pemesanan->nomor_telepon }}</td>
+                        </tr>
+                        <tr>
+                            <td>Fasilitas Custom yang Dipilih</td>
+                            <td style="text-align: right;">
+                                @if ($pemesanan->selected_fasilitas_custom && count($pemesanan->selected_fasilitas_custom) > 0)
+                                    @foreach ($pemesanan->selected_fasilitas_custom as $fasilitasId)
+                                        @php
+                                            $fasilitas = \App\Models\FasilitasCustom::find($fasilitasId);
+                                        @endphp
+                                        @if ($fasilitas)
+                                            {{ $fasilitas->nama }}
+                                            @if (!$loop->last)
+                                                ,
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                @else
+                                    Tidak Ada Fasilitas yang Dipilih.
+                                @endif
+                            </td>
+                        </tr>
+
+                        <td>Total Pesanan</td>
+                        <td style="text-align: right;">
+                            Rp.
+                            {{ number_format($pemesanan->total_pemesanan, 0, ',', '.') }}
+                        </td>
                         </tr>
                         <tr>
                             <td>Status Pembayaran</td>
-                            <td class="text-right">{{ $pemesanan->status }}</td>
+                            <td style="text-align: right;">{{ $pemesanan->status }}</td>
                         </tr>
                         @if ($pemesanan->status == 'Sudah Bayar')
                             <tr>
                                 <td>Di Verifikasi oleh</td>
-                                <td class="text-right">
+                                <td style="text-align: right;">
                                     {{ $pemesanan->verified_by ?? '-' }}
                                 </td>
                             </tr>
                             <tr>
                                 <td>Tanggal Verifikasi</td>
-                                <td class="text-right">
+                                <td style="text-align: right;">
                                     {{ $pemesanan->tanggal_verifikasi->format('l, d F Y H:i:s') ?? '-' }}
                                     {{-- {{ optional($pemesanan->tanggal_verifikasi)->format('d-m-Y H:i:s') ?? '-' }} --}}
                                 </td>
